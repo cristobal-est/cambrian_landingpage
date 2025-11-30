@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambrian Intelligence | AI & Complex Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <style>
+        /* --- CORE VARIABLES & RESET --- */
+        :root {
+            --bg-color: #050505;
+            --card-bg: #0f0f0f;
+            --text-main: #e0e0e0;
+            --text-muted: #888888;
+            --accent-primary: #3b82f6; /* Electric Blue */
+            --accent-secondary: #14b8a6; /* Teal/Geospatial */
+            --accent-purple: #8b5cf6; /* Purple for Complex Systems */
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #ffffff, var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            background: rgba(5, 5, 5, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        /* Language Switcher */
+        .lang-switch {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            border-left: 1px solid rgba(255,255,255,0.1);
+            padding-left: 1.5rem;
+        }
+        
+        .lang-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            transition: 0.3s;
+            padding: 2px 4px;
+        }
+        
+        .lang-btn.active {
+            color: var(--accent-primary);
+        }
+        
+        .lang-btn:hover {
+            color: white;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: transparent;
+            overflow: hidden; 
+        }
+
+        /* Hero Canvas (Background Animation) */
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; 
+        }
+
+        /* Hero Content z-index adjustment */
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 5vw, 5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+
+        .hero-sub {
+            color: #ffffff; 
+            font-weight: 500;
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+            font-size: 1.15rem;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* --- HERO ICON GRID --- */
+        .hero-icon-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .hero-icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            color: var(--accent-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        .hero-icon-item svg {
+            width: 32px;
+            height: 32px;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            filter: drop-shadow(0 0 5px rgba(20, 184, 166, 0.5));
+        }
+
+        .cta-hero-btn {
+            border: 1px solid var(--text-main);
+            padding: 0.5rem 1.2rem;
+            font-size: 0.85rem;
+            border-radius: 4px;
+        }
+        .cta-hero-btn:hover {
+            background: white;
+            color: black;
+        }
+
+        /* --- CORE EXPERTISE (Grid 4) --- */
+        .expertise {
+            padding: 8rem 0 6rem 0; 
+            position: relative;
+            z-index: 1;
+            background: var(--bg-color); 
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+            text-align: left;
+        }
+        .section-header h3 {
+            font-family: var(--font-mono);
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.8);
+        }
+
+        .card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag-list span {
+            display: inline-block;
+            background: rgba(255,255,255,0.05);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            font-family: var(--font-mono);
+            color: var(--text-main);
+        }
+
+        /* --- FEATURED SHOWCASE --- */
+        .showcase-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 6rem 0;
+            align-items: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            background: #050505;
+        }
+
+        .showcase-item.reversed {
+            direction: rtl; 
+        }
+        .showcase-item.reversed .content {
+            direction: ltr;
+        }
+
+        /* Content & Subsection Styling */
+        .content h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .success-block {
+            border-left: 2px solid rgba(255, 255, 255, 0.15);
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .success-title {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-family: var(--font-main);
+        }
+
+        .stat-tagline {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin: 1.5rem 0 0.5rem 0;
+            line-height: 1.2;
+            font-family: var(--font-main);
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+        
+        .content .stat-label {
+            font-size: 0.9rem;
+            color: var(--accent-secondary);
+            font-family: var(--font-mono);
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* --- VISUALS (IMAGES) --- */
+        .showcase-visual {
+            width: 100%;
+            height: 400px;
+            background: #111;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #222;
+            background-size: cover;      
+            background-position: center; 
+            background-repeat: no-repeat;
+        }
+
+        /* 1. Maritime / Fishing */
+        .visual-fishing {
+            background-image: url('./images/zunibal.jpg');
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+        }
+        .visual-fishing::after {
+            content: attr(data-overlay);
+            color: #1e3a8a;
+            font-family: var(--font-mono);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 4px;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        
+        /* 2. LLMs */
+        .visual-llm {
+            background-image: url('./images/llms.jpg');
+            border: 1px solid #333;
+        }
+
+        /* 3. Computer Vision */
+        .visual-vision {
+            background-image: url('./images/vision.jpg');
+            background-size: contain; 
+            background-color: #000;   
+        }
+        .visual-vision::after {
+            display: none;
+        }
+
+        /* 4. InSAR / Terrain Stability */
+        .visual-terrain {
+            background-image: url('./images/insar.png');
+        }
+        .visual-terrain::after {
+            content: attr(data-overlay);
+            color: #ffffff;
+            font-family: var(--font-mono);
+            background: rgba(153, 27, 27, 0.8);
+            padding: 5px 10px;
+            border-radius: 4px;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* 5. Mineral Exploration */
+        .visual-minerals {
+            background-image: url('./images/multispectral_exploration.jpg');
+        }
+        .visual-minerals::after {
+            content: attr(data-overlay);
+            color: #ffffff;
+            background: rgba(217, 119, 6, 0.8);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* Links */
+        .case-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--accent-primary);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            border-bottom: 1px solid transparent;
+            margin-right: 1.5rem;
+        }
+        .case-link:hover {
+            border-bottom-color: var(--accent-primary);
+        }
+
+        /* --- TEAM SECTION --- */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .team-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 2rem 1rem;
+            text-align: center;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        
+        .team-card:hover {
+            border-color: var(--text-main);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .team-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-primary);
+        }
+        
+        .team-card h4 {
+            color: white;
+            font-weight: 600;
+        }
+
+        .team-card span {
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 6rem 0 3rem 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            background: #050505;
+        }
+        
+        .contact-box h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .email-link {
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            text-decoration: underline;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .footer-info {
+            margin-top: 4rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .social-link {
+            font-size: 1rem;
+            color: white;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        .social-link:hover {
+            background: white;
+            color: black;
+            border-color: white;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 2.5rem; }
+            .grid-4 { grid-template-columns: 1fr; }
+            .showcase-item, .showcase-item.reversed { 
+                grid-template-columns: 1fr; 
+                direction: ltr;
+            }
+            .hero-icon-row { grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;}
+            .nav-links { display: none; } 
+            .nav-right { gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="container nav-inner">
+            <div class="logo">Cambrian Intelligence</div>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="#solutions" data-i18n="nav.solutions">Solutions</a>
+                    <a href="#work" data-i18n="nav.work">Case Studies</a>
+                    <a href="#team" data-i18n="nav.team">Team</a>
+                    <a href="#contact" data-i18n="nav.contact">Contact Us</a>
+                </div>
+                <!-- Language Switcher -->
+                <div class="lang-switch">
+                    <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
+                    <span>/</span>
+                    <button class="lang-btn" onclick="setLanguage('es')">ES</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <canvas id="hero-canvas"></canvas>
+
+        <div class="container hero-content reveal active">
+            
+            <div class="hero-icon-row">
+                <div class="hero-icon-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    <span data-i18n="hero.geospatial">GEOSPATIAL</span>
+                </div>
+
+                <div class="hero-icon-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <span data-i18n="hero.vision">COMPUTER VISION</span>
+                </div>
+
+                <div class="hero-icon-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        <line x1="8" y1="10" x2="16" y2="10"></line>
+                        <line x1="8" y1="14" x2="12" y2="14"></line>
+                    </svg>
+                    <span data-i18n="hero.language">LANGUAGE</span>
+                </div>
+
+                <div class="hero-icon-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    </svg>
+                    <span data-i18n="hero.complex">COMPLEX SYSTEMS</span>
+                </div>
+            </div>
+
+            <h1>
+                <span data-i18n="hero.title1">Solving Complexity</span><br>
+                <span class="gradient-text" data-i18n="hero.title2">with Intelligence.</span>
+            </h1>
+            
+            <div class="hero-sub" data-i18n="hero.subtitle">
+                Artificial Intelligence solutions for high-stakes environments.
+            </div>
+
+            <a href="#solutions" class="cta-hero-btn" style="padding: 1rem 2rem; font-size: 1rem;" data-i18n="hero.cta">Explore Our Work</a>
+        </div>
+    </header>
+
+    <section id="solutions" class="expertise container reveal">
+        <div class="section-header">
+            <h3 data-i18n="solutions.pre">Core Expertise</h3>
+            <h2 data-i18n="solutions.title">Our Technology Stack</h2>
+        </div>
+        
+        <div class="grid-4">
+            
+            <div class="card">
+                <div>
+                    <h4 data-i18n="card.llm.title">Large Language Models</h4>
+                    <p data-i18n="card.llm.desc">Tailored ChatGPT-like models for search and generation. We specialize in Multimodal processing (text, audio, video).</p>
+                </div>
+                <div class="tag-list">
+                    <span data-i18n="card.llm.tag1">Zero Data Leakage</span>
+                    <span data-i18n="card.llm.tag2">Advanced RAG</span>
+                    <span data-i18n="card.llm.tag3">Doc Analysis</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h4 data-i18n="card.cv.title">Computer Vision</h4>
+                    <p data-i18n="card.cv.desc">Superhuman-level perception tuned for difficult environments. Detection, identification, and tracking of high-velocity objects.</p>
+                </div>
+                <div class="tag-list">
+                    <span data-i18n="card.cv.tag1">Drone Tracking</span>
+                    <span data-i18n="card.cv.tag2">Real-time</span>
+                    <span data-i18n="card.cv.tag3">High Precision</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h4 data-i18n="card.geo.title">Geospatial Intelligence</h4>
+                    <p data-i18n="card.geo.desc">Advanced satellite radar (InSAR) and multispectral analysis for terrain displacement and composition.</p>
+                </div>
+                <div class="tag-list">
+                    <span data-i18n="card.geo.tag1">Centimeter Precision</span>
+                    <span data-i18n="card.geo.tag2">Mineral ID</span>
+                    <span data-i18n="card.geo.tag3">Remote Sensing</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <h4 data-i18n="card.cs.title">Complex Systems</h4>
+                    <p data-i18n="card.cs.desc">Holistic integration of AI and data flows for predictive modeling. Proven impact in production environments.</p>
+                </div>
+                <div class="tag-list">
+                    <span data-i18n="card.cs.tag1">Multi-variable Prediction</span>
+                    <span data-i18n="card.cs.tag2">Production Ready</span>
+                    <span data-i18n="card.cs.tag3">System Integration</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="work" class="container">
+        
+        <!-- Case 1 -->
+        <div class="showcase-item reveal">
+            <div class="content">
+                <h3 data-i18n="case1.title">AI + Remote Sensing + Satellite Imagery</h3>
+                
+                <p data-i18n="case1.desc">We integrate Artificial Intelligence, <strong>sensor readings</strong>, and multispectral satellite imagery to generate predictive models. Our systems process vast datasets to identify patterns invisible to standard analysis.</p>
+                
+                <div class="success-block">
+                    <h4 class="success-title" data-i18n="case1.success_title">Success Story: Prediction of Optimal Fishing Areas</h4>
+                    <p style="font-size: 0.9rem;" data-i18n="case1.success_desc">We predict target fish species occurrence by training models on specific <strong>sonar readings</strong> and oceanographic data. The solution is fully deployed in a production environment and is used daily by dozens of vessels.</p>
+                    
+                    <a href="https://zunibal.com/en/the-artificial-intelligence-solutions-that-will-revolutionize-the-fishing-sector/" target="_blank" class="case-link" data-i18n="case1.link">
+                        > Read Zunibal Case Study
+                    </a>
+                </div>
+
+                <div class="stat-tagline" data-i18n="case1.stat_main">
+                    Production Ready AI
+                </div>
+                <span class="stat-label" data-i18n="case1.stat_sub">Fully deployed environment</span>
+            </div>
+            <div class="showcase-visual visual-fishing" data-overlay="Sonar + Satellite Data Layer"></div>
+        </div>
+
+        <!-- Case 2 -->
+        <div class="showcase-item reversed reveal">
+            <div class="content">
+                <h3 data-i18n="case2.title">Large Language Models</h3>
+                
+                <p data-i18n="case2.desc">We engineer tailored ChatGPT-like models for enterprise tasks. Our systems utilize <strong>Multimodal processing</strong> (text, audio, video) and <strong>Document Search & Analysis</strong> using AI agents (Advanced RAG) to retrieve precise answers from your internal data.</p>
+                
+                <div class="success-block" style="border-color: var(--accent-purple);">
+                    <h4 class="success-title" data-i18n="case2.success_title">Success Story: Secure Translation & Search</h4>
+                    <p style="font-size: 0.9rem;" data-i18n="case2.success_desc">We develop <strong>Private, Locally Hosted</strong> models that ensure <strong>Zero Data Leakage</strong> for high-security clients like the European and major service providers like Seprotec.</p>
+                    
+                    <a href="https://seprotec.com/en/technology/ai-language-technologies" target="_blank" class="case-link" data-i18n="case2.link">
+                        > View the technology we provide to Seprotec
+                    </a>
+                </div>
+
+                <div class="stat-tagline" data-i18n="case2.stat_main">
+                    Custom Private GPT-like LLMs
+                </div>
+                <span class="stat-label" data-i18n="case2.stat_sub">Generative AI with Zero Data Leakage</span>
+            </div>
+            <div class="showcase-visual visual-llm"></div>
+        </div>
+
+        <!-- Case 3 -->
+        <div class="showcase-item reveal">
+            <div class="content">
+                <h3 data-i18n="case3.title">Superhuman-Level Computer Vision</h3>
+                
+                <p data-i18n="case3.desc">We provide extensive experience in advanced computer vision tasks including detection, identification, tracking, and counting. Our algorithms are specifically tuned for <strong>difficult environments</strong> where standard precision fails.</p>
+                
+                <div class="success-block" style="border-color: var(--accent-secondary);">
+                    <h4 class="success-title" data-i18n="case3.success_title">Success Story: Aerial Guard</h4>
+                    <p style="font-size: 0.9rem;" data-i18n="case3.success_desc">A production tool for the real-time detection and tracking of high-velocity flying objects—including birds, drones, and missiles. It achieves detection rates that outperform human capability.</p>
+                    
+                    <div style="display: flex; flex-wrap: wrap;">
+                        <a href="https://apps.apple.com/es/app/aerial-guard/id6746328878" target="_blank" class="case-link" data-i18n="case3.link1">
+                            > View our iOS App
+                        </a>
+                        <a href="https://drive.google.com/file/d/1PZH-2tromLvO-kVVQDLNDtugft1uTHIz/view" target="_blank" class="case-link" data-i18n="case3.link2">
+                            > Watch Demo Video
+                        </a>
+                    </div>
+                </div>
+
+                <div class="stat-tagline" data-i18n="case3.stat_main">
+                    High Performance
+                </div>
+                <span class="stat-label" data-i18n="case3.stat_sub">Real-time tracking</span>
+            </div>
+            <div class="showcase-visual visual-vision"></div>
+        </div>
+
+        <!-- Case 4 -->
+        <div class="showcase-item reversed reveal">
+            <div class="content">
+                <h3 data-i18n="case4.title">AI-Enhanced Terrain Displacement</h3>
+                
+                <p data-i18n="case4.desc">We utilize advanced analysis of satellite radar data (InSAR) to assess terrain displacement. By <strong>enhancing this data with Artificial Intelligence</strong>, we isolate critical patterns that traditional methods miss.</p>
+                
+                <div class="success-block" style="border-color: #991b1b;">
+                    <h4 class="success-title" data-i18n="case4.success_title">Platform: TerraColor - Stability</h4>
+                    <p style="font-size: 0.9rem;" data-i18n="case4.success_desc">Delivering comprehensive reporting with <strong>centimeter-level precision</strong>. Our AI automatically detects and flags specific areas of interest over time.</p>
+                    
+                    <a href="https://terracolor.ai/" target="_blank" class="case-link" data-i18n="case4.link">
+                        > Visit TerraColor.ai
+                    </a>
+                </div>
+
+                <div class="stat-tagline" data-i18n="case4.stat_main">
+                    AI Powered
+                </div>
+                <span class="stat-label" data-i18n="case4.stat_sub">Centimeter-level precision</span>
+            </div>
+            <div class="showcase-visual visual-terrain" data-overlay="InSAR Heatmap & Displacement"></div>
+        </div>
+
+        <!-- Case 5 -->
+        <div class="showcase-item reveal">
+            <div class="content">
+                <h3 data-i18n="case5.title">AI-Enhanced Terrain Composition Analysis</h3>
+                
+                <p data-i18n="case5.desc">We leverage <strong>multi-source geospatial analysis</strong> to identify material composition. Our algorithms analyze spectral similarity to find where specific elements are most likely to be present.</p>
+                
+                <div class="success-block" style="border-color: #d97706;">
+                    <h4 class="success-title" data-i18n="case5.success_title">Platform: TerraColor - Exploration</h4>
+                    <p style="font-size: 0.9rem;" data-i18n="case5.success_desc">Our <strong>Element Distribution Analyzer</strong> integrates satellite imagery with core drilling data, using AI to map complex mineral distributions across vast territories.</p>
+                    
+                    <a href="https://terracolor.ai/" target="_blank" class="case-link" data-i18n="case5.link">
+                        > Visit TerraColor.ai
+                    </a>
+                </div>
+
+                <div class="stat-tagline" data-i18n="case5.stat_main">
+                    AI Guided Exploration
+                </div>
+                <span class="stat-label" data-i18n="case5.stat_sub">Multi-source geospatial analysis</span>
+            </div>
+            <div class="showcase-visual visual-minerals" data-overlay="Spectral Analysis"></div>
+        </div>
+
+    </section>
+
+    <section id="team" class="statement reveal" style="background: #050505; padding-bottom: 8rem; padding-top: 4rem;">
+        <div class="container">
+            <h3 style="color: white; font-size: 2rem; margin-bottom: 1rem;" data-i18n="team.title">Built by World-Class Talent</h3>
+            
+            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 2rem; max-width: 600px; color: #ffffff; margin-left: auto; margin-right: auto;" data-i18n="team.desc">
+                Our core team is composed of experts in their fields, dedicated to solving the hardest problems.
+            </p>
+            
+            <div class="team-grid">
+                
+                <div class="team-card">
+                    <div class="team-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+                    </div>
+                    <h4 data-i18n="team.role1">Engineers</h4>
+                    <span data-i18n="team.spec1">System Architecture</span>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                    </div>
+                    <h4 data-i18n="team.role2">Computer Scientists</h4>
+                    <span data-i18n="team.spec2">Algorithm Design</span>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5z"/></svg>
+                    </div>
+                    <h4 data-i18n="team.role3">Physicists</h4>
+                    <span data-i18n="team.spec3">Complex Dynamics</span>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6H5l7 7-7 7h13" /></svg>
+                    </div>
+                    <h4 data-i18n="team.role4">Mathematicians</h4>
+                    <span data-i18n="team.spec4">Theoretical Foundations</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="reveal">
+        <div class="container contact-box">
+            <h2 data-i18n="footer.title">Ready to Innovate?</h2>
+            <p style="margin-bottom: 2rem; color: #ffffff;" data-i18n="footer.desc">We will study your case and provide a preliminary analysis.</p>
+            
+            <div style="margin-bottom: 2rem;">
+                <a href="mailto:hello@cambrianintelligence.com" class="email-link">hello AT cambrianintelligence.com</a>
+            </div>
+
+            <a href="https://www.linkedin.com/company/cambrian-intelligence/" target="_blank" class="social-link">LinkedIn</a>
+            
+            <div class="footer-info">
+                <p data-i18n="footer.copy">&copy; 2025 Cambrian Intelligence. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- TRANSLATION DATA ---
+        const translations = {
+            en: {
+                nav: { solutions: "Solutions", work: "Case Studies", team: "Team", contact: "Contact Us" },
+                hero: {
+                    geospatial: "GEOSPATIAL INTELLIGENCE", vision: "COMPUTER VISION", language: "LANGUAGE", complex: "COMPLEX SYSTEMS",
+                    title1: "Solving Complexity", title2: "with Intelligence.",
+                    subtitle: "Artificial Intelligence solutions for high-stakes environments.",
+                    cta: "Explore Our Work"
+                },
+                solutions: { pre: "Core Expertise", title: "Our Technology Stack" },
+                card: {
+                    llm: { title: "Large Language Models", desc: "Tailored ChatGPT-like models for search and generation. We specialize in Multimodal processing (text, audio, video).", tag1: "Zero Data Leakage", tag2: "Advanced RAG", tag3: "Doc Analysis" },
+                    cv: { title: "Computer Vision", desc: "Superhuman-level perception tuned for difficult environments. Detection, identification, and tracking of high-velocity objects.", tag1: "Drone Tracking", tag2: "Real-time", tag3: "High Precision" },
+                    geo: { title: "Geospatial Intelligence", desc: "Advanced satellite radar (InSAR) and multispectral analysis for terrain displacement and composition.", tag1: "Centimeter Precision", tag2: "Mineral ID", tag3: "Remote Sensing" },
+                    cs: { title: "Complex Systems", desc: "Holistic integration of AI and data flows for predictive modeling. Proven impact in production environments.", tag1: "Multi-variable Prediction", tag2: "Production Ready", tag3: "System Integration" }
+                },
+                case1: {
+                    title: "AI + Remote Sensing + Satellite Imagery", desc: "We integrate Artificial Intelligence, <strong>sensor readings</strong>, and multispectral satellite imagery to generate predictive models. Our systems process vast datasets to identify patterns invisible to standard analysis.",
+                    success_title: "Success Story: Prediction of Optimal Fishing Areas", success_desc: "We predict target fish species occurrence by training models on specific <strong>sonar readings</strong> and oceanographic data. The solution is fully deployed in a production environment and is used daily by dozens of vessels.",
+                    link: "> Read Zunibal Case Study", stat_main: "Production Ready AI", stat_sub: "Fully deployed environment",
+                    overlay: "Sonar + Satellite Data Layer"
+                },
+                case2: {
+                    title: "Large Language Models", desc: "We engineer tailored ChatGPT-like models for enterprise tasks. Our systems utilize <strong>Multimodal processing</strong> (text, audio, video) and <strong>Document Search & Analysis</strong> using AI agents (Advanced RAG) to retrieve precise answers from your internal data.",
+                    success_title: "Success Story: Secure Translation & Search", success_desc: "We develop <strong>Private, Locally Hosted</strong> models that ensure <strong>Zero Data Leakage</strong> for high-security clients like the European and major service providers like Seprotec.",
+                    link: "> View the technology we provide to Seprotec", stat_main: "Custom Private GPT-like LLMs", stat_sub: "Generative AI with Zero Data Leakage"
+                },
+                case3: {
+                    title: "Superhuman-Level Computer Vision", desc: "We provide extensive experience in advanced computer vision tasks including detection, identification, tracking, and counting. Our algorithms are specifically tuned for <strong>difficult environments</strong> where standard precision fails.",
+                    success_title: "Success Story: Aerial Guard", success_desc: "A production tool for the real-time detection and tracking of high-velocity flying objects—including birds, drones, and missiles. It achieves detection rates that outperform human capability.",
+                    link1: "> View our iOS App", link2: "> Watch Demo Video", stat_main: "High Performance", stat_sub: "Real-time tracking"
+                },
+                case4: {
+                    title: "AI-Enhanced Terrain Displacement Estimation", desc: "We utilize advanced analysis of satellite radar data (InSAR) to assess terrain displacement. By <strong>enhancing this data with Artificial Intelligence</strong>, we isolate critical patterns that traditional methods miss.",
+                    success_title: "Platform: TerraColor - Stability", success_desc: "Delivering comprehensive reporting with <strong>centimeter-level precision</strong>. Our AI automatically detects and flags specific areas of interest over time.",
+                    link: "> Visit TerraColor.ai", stat_main: "AI Powered", stat_sub: "Centimeter-level precision",
+                    overlay: "InSAR Heatmap & Displacement"
+                },
+                case5: {
+                    title: "AI-Enhanced Terrain Composition Analysis", desc: "We leverage <strong>multi-source geospatial analysis</strong> to identify material composition. Our algorithms analyze spectral similarity to find where specific elements are most likely to be present.",
+                    success_title: "Platform: TerraColor - Exploration", success_desc: "Our <strong>Element Distribution Analyzer</strong> integrates satellite imagery with core drilling data, using AI to map complex mineral distributions across vast territories.",
+                    link: "> Visit TerraColor.ai", stat_main: "AI Guided Exploration", stat_sub: "Multi-source geospatial analysis",
+                    overlay: "Spectral Analysis"
+                },
+                team: {
+                    title: "Built by World-Class Talent", desc: "Our core team is composed of experts in their fields, dedicated to solving the hardest problems.",
+                    role1: "Engineers", spec1: "System Architecture",
+                    role2: "Computer Scientists", spec2: "Algorithm Design",
+                    role3: "Physicists", spec3: "Complex Dynamics",
+                    role4: "Mathematicians", spec4: "Theoretical Foundations"
+                },
+                footer: {
+                    title: "Ready to Innovate?", desc: "We will study your case and provide a preliminary analysis.", copy: "&copy; 2025 Cambrian Intelligence. All rights reserved."
+                }
+            },
+            es: {
+                nav: { solutions: "Soluciones", work: "Casos de éxito", team: "Equipo", contact: "Contacto" },
+                hero: {
+                    geospatial: "INTELIGENCIA GEOESPACIAL", vision: "VISIÓN ARTIFICIAL", language: "LENGUAJE", complex: "SISTEMAS COMPLEJOS",
+                    title1: "Resolviendo complejidad", title2: "con inteligencia.",
+                    subtitle: "Soluciones de inteligencia artificial para entornos críticos.",
+                    cta: "Descubre nuestros proyectos"
+                },
+                solutions: { pre: "Líneas principales", title: "Nuestro stack tecnológico" },
+                card: {
+                    llm: { title: "Modelos de Lenguaje (LLMs)", desc: "Modelos tipo ChatGPT a medida para búsqueda y generación. Procesamiento multimodal (texto, audio, vídeo).", tag1: "Cero fuga de datos", tag2: "RAG Avanzado", tag3: "Análisis de documentos" },
+                    cv: { title: "Visión Artificial", desc: "Percepción sobrehumana para entornos difíciles. Detección, identificación y seguimiento de objetos.", tag1: "Tracking de drones", tag2: "Tiempo Real", tag3: "Alta Precisión" },
+                    geo: { title: "Inteligencia Geoespacial", desc: "Radar satelital avanzado (InSAR) y análisis multiespectral para desplazamiento del terreno y composición.", tag1: "Precisión Centimétrica", tag2: "Identificación de minerales", tag3: "Teledetección" },
+                    cs: { title: "Sistemas Complejos", desc: "Integración holística de IA y flujos de datos para modelado predictivo. Impacto demostrado en entornos de producción.", tag1: "Predicción Multivariable", tag2: "Listo para producción", tag3: "Integración de Sistemas" }
+                },
+                case1: {
+                    title: "IA + Sensores remotos + Imágenes satelitales", desc: "Integramos Inteligencia Artificial, <strong>lecturas de sensores</strong> e imágenes satelitales multiespectrales para generar modelos predictivos en entornos marítimos. Nuestros sistemas procesan vastos conjuntos de datos para identificar patrones invisibles al análisis estándar.",
+                    success_title: "Caso de éxito: Predicción de áreas de pesca óptimas", success_desc: "Predecimos la presencia de especies objetivo entrenando modelos con <strong>lecturas de sonar</strong> específicas y datos oceanográficos. La solución está totalmente desplegada en producción y es utilizada diariamente por decenas de buques.",
+                    link: "> Leer Caso de éxito de Zunibal", stat_main: "IA Lista para Producción", stat_sub: "Operativo en Producción",
+                    overlay: "Sonar + Capa de datos satelitales"
+                },
+                case2: {
+                    title: "Modelos de lenguaje (LLMs)", desc: "Diseñamos modelos tipo ChatGPT a medida para tareas empresariales. Nuestros sistemas utilizan <strong>procesamiento multimodal</strong> (texto, audio, vídeo) y <strong>búsqueda y análisis documental</strong> mediante agentes de IA (RAG Avanzado) para recuperar respuestas precisas de sus datos internos.",
+                    success_title: "Caso de éxito: Traducción y búsqueda segura", success_desc: "Desarrollamos modelos <strong>privados y alojados localmente</strong> que garantizan <strong>cero fuga de datos</strong> para clientes de alta seguridad y grandes proveedores de servicios como Seprotec.",
+                    link: "> Ver la tecnología que proveemos a Seprotec", stat_main: "LLMs privados y personalizados", stat_sub: "IA Generativa con cero fuga de datos"
+                },
+                case3: {
+                    title: "Visión artificial de nivel sobrehumano", desc: "Ofrecemos amplia experiencia en tareas avanzadas de visión artificial, incluyendo detección, identificación, seguimiento y conteo. Nuestros algoritmos están específicamente ajustados para <strong>entornos difíciles</strong> donde la precisión estándar falla.",
+                    success_title: "Caso de éxito: Aerial Guard", success_desc: "Una herramienta de producción para la detección y seguimiento en tiempo real de objetos voladores de alta velocidad, incluyendo aves, drones y proyectiles. Logra tasas de detección que superan la capacidad humana.",
+                    link1: "> Ver nuestra App iOS", link2: "> Ver Vídeo Demo", stat_main: "Alto rendimiento", stat_sub: "Seguimiento en tiempo real"
+                },
+                case4: {
+                    title: "Estimación de desplazamiento de terreno mejorado por IA", desc: "Utilizamos análisis avanzado de datos de radar satelital (InSAR) para evaluar el desplazamiento del terreno. Al <strong>mejorar estos datos con Inteligencia Artificial</strong>, aislamos patrones críticos que los métodos tradicionales pasan por alto.",
+                    success_title: "Plataforma: TerraColor - Estabilidad", success_desc: "Entregando informes completos con <strong>precisión centimétrica</strong>. Nuestra IA detecta y marca automáticamente áreas de interés específicas a lo largo del tiempo.",
+                    link: "> Visitar TerraColor.ai", stat_main: "Impulsado por IA", stat_sub: "Precisión centimétrica",
+                    overlay: "Mapa de calor InSAR y desplazamiento"
+                },
+                case5: {
+                    title: "Análisis de composición de terreno mejorado por IA", desc: "Aprovechamos el <strong>análisis geoespacial multifuente</strong> para identificar la composición de materiales. Nuestros algoritmos analizan la similitud espectral para encontrar dónde es más probable que estén presentes elementos específicos.",
+                    success_title: "Plataforma: TerraColor - Exploración", success_desc: "Nuestro <strong>Analizador de distribución de elementos</strong> integra imágenes satelitales con datos de sondeos, utilizando IA para mapear distribuciones minerales complejas en vastos territorios.",
+                    link: "> Visitar TerraColor.ai", stat_main: "Exploración guiada por IA", stat_sub: "Análisis geoespacial multifuente",
+                    overlay: "Análisis espectral"
+                },
+                team: {
+                    title: "Desarrollado por talento de clase mundial", desc: "Nuestro equipo central está compuesto por expertos en sus campos, dedicados a resolver los problemas más difíciles.",
+                    role1: "Ingenieros", spec1: "Arquitectura de Sistemas",
+                    role2: "Informáticos", spec2: "Diseño de Algoritmos",
+                    role3: "Físicos", spec3: "Dinámica Compleja",
+                    role4: "Matemáticos", spec4: "Fundamentos Teóricos"
+                },
+                footer: {
+                    title: "¿Listo para innovar?", desc: "Estudiaremos tu caso y proporcionaremos un análisis preliminar.", copy: "&copy; 2025 Cambrian Intelligence. Todos los derechos reservados."
+                }
+            }
+        };
+
+        function setLanguage(lang) {
+            // Update Text
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const keys = el.getAttribute('data-i18n').split('.');
+                let val = translations[lang];
+                keys.forEach(k => val = val[k]);
+                if (val) el.innerHTML = val;
+            });
+
+            // Update Image Overlays (Pseudo-elements handled via attribute)
+            const visualFishing = document.querySelector('.visual-fishing');
+            const visualTerrain = document.querySelector('.visual-terrain');
+            const visualMinerals = document.querySelector('.visual-minerals');
+
+            if(visualFishing && translations[lang].case1.overlay) 
+                visualFishing.setAttribute('data-overlay', translations[lang].case1.overlay);
+            
+            if(visualTerrain && translations[lang].case4.overlay) 
+                visualTerrain.setAttribute('data-overlay', translations[lang].case4.overlay);
+            
+            if(visualMinerals && translations[lang].case5.overlay) 
+                visualMinerals.setAttribute('data-overlay', translations[lang].case5.overlay);
+
+            // Update Buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = Array.from(document.querySelectorAll('.lang-btn')).find(b => b.innerText.toLowerCase() === lang);
+            if(activeBtn) activeBtn.classList.add('active');
+        }
+
+        // --- AUTO-DETECT LANGUAGE ---
+        // Run immediately to avoid flicker
+        (function() {
+            const userLang = navigator.language || navigator.userLanguage; 
+            if (userLang.startsWith('es')) {
+                setLanguage('es');
+            } else {
+                setLanguage('en');
+            }
+        })();
+
+        // --- SCROLL ANIMATION ---
+        window.addEventListener('scroll', reveal);
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        reveal();
+    </script>
+
+    <script>
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let w, h;
+        let particles = [];
+        let sparks = []; 
+        
+        // CONFIGURATION
+        const connectionDistance = 100;
+        const waveCount = 5;       
+        const phaseStep = 0.2;     
+
+        // ---------------------------------------------------------
+        // WAVE MATH
+        // ---------------------------------------------------------
+        function getWaveY(x, time, phaseOffset) {
+            // Slower frequency (0.0007 instead of 0.001) for slower undulation
+            return (h / 2) + 
+                   Math.sin(x * 0.002 + time + phaseOffset) * 120 + 
+                   Math.sin(x * 0.004 + time * 0.5) * 40; 
+        }
+
+        // ---------------------------------------------------------
+        // PARTICLE CLASS (Background & Surge)
+        // ---------------------------------------------------------
+        class Particle {
+            constructor(isSurge = false, surgeX = 0) {
+                this.isSurge = isSurge;
+                this.init(true, surgeX);
+            }
+
+            init(randomX, surgeX) {
+                if (this.isSurge) {
+                    this.x = surgeX + (Math.random() - 0.5) * 100; 
+                    // Slower surge speed: was 1.0 + rand*2.0
+                    this.speed = (1.0 + Math.random() * 2.0) * 0.75; 
+                } else {
+                    this.x = randomX ? Math.random() * w : 0;
+                    // Slower background speed: was 0.5 + rand*1.5
+                    this.speed = (0.5 + Math.random() * 1.5) * 0.75;
+                }
+                
+                this.size = Math.random() * 2 + 1;
+                this.laneIndex = Math.floor(Math.random() * waveCount);
+                this.lanePhase = this.laneIndex * phaseStep;
+                this.yOffset = (Math.random() - 0.5) * 60; 
+                
+                const isBright = Math.random() > 0.85; 
+
+                if (isBright || this.isSurge) {
+                    this.color = this.laneIndex % 2 === 0 ? '#00f2ff' : '#ffaa00';
+                } else {
+                    this.color = this.laneIndex % 2 === 0 ? 'rgba(0, 242, 255, 0.35)' : 'rgba(255, 170, 0, 0.35)';
+                }
+            }
+
+            update(time) {
+                this.x += this.speed;
+
+                const laneY = getWaveY(this.x, time, this.lanePhase);
+                this.y = laneY + this.yOffset;
+
+                if (this.x > w) {
+                    if (this.isSurge) {
+                        return false; 
+                    } else {
+                        this.init(false); 
+                    }
+                }
+                return true; 
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        // ---------------------------------------------------------
+        // SPARK CLASS (Literal Explosions)
+        // ---------------------------------------------------------
+        class Spark {
+           constructor(x, y) {
+              this.x = x;
+              this.y = y;
+              const angle = Math.random() * Math.PI * 2;
+              // Slower explosion speed: was rand*3 + 2
+              const speed = (Math.random() * 3 + 2) * 0.75; 
+              this.vx = Math.cos(angle) * speed;
+              this.vy = Math.sin(angle) * speed;
+              this.life = 1.0; 
+              this.decay = Math.random() * 0.02 + 0.01;
+              this.color = Math.random() > 0.5 ? '#ffffff' : (Math.random() > 0.5 ? '#00f2ff' : '#ffaa00'); 
+           }
+           update() {
+              this.x += this.vx;
+              this.y += this.vy;
+              this.life -= this.decay;
+           }
+           draw(ctx) {
+              ctx.save();
+              ctx.globalAlpha = this.life;
+              ctx.fillStyle = this.color;
+              ctx.beginPath();
+              ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2);
+              ctx.fill();
+              ctx.restore();
+           }
+        }
+
+        // ---------------------------------------------------------
+        // INIT & RESIZE
+        // ---------------------------------------------------------
+        function initParticles() {
+            particles = [];
+            // Base: 60 particles for 1500px width.
+            const densityRatio = w / 1500;
+            const count = Math.max(20, Math.floor(60 * densityRatio));
+
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle(false));
+            }
+        }
+
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+            initParticles(); 
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // ---------------------------------------------------------
+        // SURGE & EXPLOSION LOGIC
+        // ---------------------------------------------------------
+        let lastExplosion = Date.now();
+        let explosionDelay = Math.random() * 7000 + 3000; 
+        
+        let lastSurge = Date.now();
+        let surgeDelay = Math.random() * 7000 + 3000; 
+
+        function handleEffects(time) {
+           const now = Date.now();
+
+           // 1. Literal Explosions (Sparks)
+           if (now - lastExplosion > explosionDelay) {
+              const exX = Math.random() * w;
+              const lane = Math.floor(Math.random() * 5);
+              const phase = lane * 0.2;
+              const exY = getWaveY(exX, time, phase); 
+              
+              for(let i=0; i<30; i++) { 
+                  sparks.push(new Spark(exX, exY));
+              }
+              
+              lastExplosion = now;
+              // Slightly longer delay for slower feel
+              explosionDelay = Math.random() * 8000 + 3000;
+           }
+           
+           // 2. Data Density Surges
+           if (now - lastSurge > surgeDelay) {
+               const surgeX = Math.random() * w; 
+               const surgeCount = 60; 
+               for(let i=0; i<surgeCount; i++) {
+                   particles.push(new Particle(true, surgeX));
+               }
+               lastSurge = now;
+               // Slightly longer delay
+               surgeDelay = Math.random() * 8000 + 4000;
+           }
+
+           for (let i = sparks.length - 1; i >= 0; i--) {
+               sparks[i].update();
+               sparks[i].draw(ctx);
+               if (sparks[i].life <= 0) sparks.splice(i, 1);
+           }
+        }
+
+        // ---------------------------------------------------------
+        // ANIMATE LOOP
+        // ---------------------------------------------------------
+        function animate() {
+            ctx.clearRect(0, 0, w, h);
+            
+            // Slower time factor: was 0.001
+            const time = Date.now() * 0.0007;
+
+            // 1. Draw Waves (Glowing)
+            for(let i = 0; i < waveCount; i++) {
+                const phase = i * phaseStep; 
+                
+                ctx.save();
+                ctx.beginPath();
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = "white"; 
+                
+                ctx.strokeStyle = i % 2 === 0 ? 'rgba(200, 255, 255, 0.5)' : 'rgba(255, 240, 200, 0.5)';
+                ctx.lineWidth = 1;
+
+                for (let x = 0; x < w; x += 10) {
+                    let y = getWaveY(x, time, phase);
+                    if (x === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+                ctx.restore();
+            }
+
+            // 2. Draw Particles & Network
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                const alive = p.update(time);
+                
+                if (!alive) {
+                    particles.splice(i, 1);
+                    continue;
+                }
+
+                p.draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    
+                    if (Math.abs(dx) > connectionDistance) continue; 
+
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < connectionDistance) {
+                        ctx.beginPath();
+                        const opacity = 1 - (dist / connectionDistance);
+                        ctx.strokeStyle = `rgba(100, 200, 255, ${opacity * 0.45})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // 3. Handle Special Effects
+            handleEffects(time);
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
