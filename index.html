@@ -574,7 +574,6 @@
                     <a href="#team" data-i18n="nav.team">Team</a>
                     <a href="#contact" data-i18n="nav.contact">Contact Us</a>
                 </div>
-                <!-- Language Switcher -->
                 <div class="lang-switch">
                     <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
                     <span>/</span>
@@ -702,8 +701,12 @@
 
     <section id="work" class="container">
         
-        <!-- Case 1 -->
-        <div class="showcase-item reveal">
+        <div class="section-header" style="margin-bottom: 4rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 6rem;">
+            <h3 data-i18n="portfolio.pre">Engineering Excellence</h3>
+            <h2 data-i18n="portfolio.title">Portfolio</h2>
+        </div>
+
+        <div class="showcase-item reveal" style="border-top: none; padding-top: 0;">
             <div class="content">
                 <h3 data-i18n="case1.title">AI + Remote Sensing + Satellite Imagery</h3>
                 
@@ -726,7 +729,6 @@
             <div class="showcase-visual visual-fishing" data-overlay="Sonar + Satellite Data Layer"></div>
         </div>
 
-        <!-- Case 2 -->
         <div class="showcase-item reversed reveal">
             <div class="content">
                 <h3 data-i18n="case2.title">Large Language Models</h3>
@@ -750,7 +752,6 @@
             <div class="showcase-visual visual-llm"></div>
         </div>
 
-        <!-- Case 3 -->
         <div class="showcase-item reveal">
             <div class="content">
                 <h3 data-i18n="case3.title">Superhuman-Level Computer Vision</h3>
@@ -779,7 +780,6 @@
             <div class="showcase-visual visual-vision"></div>
         </div>
 
-        <!-- Case 4 -->
         <div class="showcase-item reversed reveal">
             <div class="content">
                 <h3 data-i18n="case4.title">AI-Enhanced Terrain Displacement</h3>
@@ -803,7 +803,6 @@
             <div class="showcase-visual visual-terrain" data-overlay="InSAR Heatmap & Displacement"></div>
         </div>
 
-        <!-- Case 5 -->
         <div class="showcase-item reveal">
             <div class="content">
                 <h3 data-i18n="case5.title">AI-Enhanced Terrain Composition Analysis</h3>
@@ -898,12 +897,13 @@
             en: {
                 nav: { solutions: "Solutions", work: "Case Studies", team: "Team", contact: "Contact Us" },
                 hero: {
-                    geospatial: "GEOSPATIAL INTELLIGENCE", vision: "COMPUTER VISION", language: "LANGUAGE", complex: "COMPLEX SYSTEMS",
+                    geospatial: "GEOSPATIAL INTELLIGENCE", vision: "COMPUTER VISION", language: "LANGUAGE MODELS", complex: "COMPLEX SYSTEMS",
                     title1: "Solving Complexity", title2: "with Intelligence.",
                     subtitle: "Artificial Intelligence solutions for high-stakes environments.",
                     cta: "Explore Our Work"
                 },
                 solutions: { pre: "Core Expertise", title: "Our Technology Stack" },
+                portfolio: { pre: "AI Engineering Excellence", title: "Portfolio" },
                 card: {
                     llm: { title: "Large Language Models", desc: "Tailored ChatGPT-like models for search and generation. We specialize in Multimodal processing (text, audio, video).", tag1: "Zero Data Leakage", tag2: "Advanced RAG", tag3: "Doc Analysis" },
                     cv: { title: "Computer Vision", desc: "Superhuman-level perception tuned for difficult environments. Detection, identification, and tracking of high-velocity objects.", tag1: "Drone Tracking", tag2: "Real-time", tag3: "High Precision" },
@@ -918,7 +918,7 @@
                 },
                 case2: {
                     title: "Large Language Models", desc: "We engineer tailored ChatGPT-like models for enterprise tasks. Our systems utilize <strong>Multimodal processing</strong> (text, audio, video) and <strong>Document Search & Analysis</strong> using AI agents (Advanced RAG) to retrieve precise answers from your internal data.",
-                    success_title: "Success Story: Secure Translation & Search", success_desc: "We develop <strong>Custom, Private, Locally Hosted</strong> models that ensure <strong>Zero Data Leakage</strong> for high-security clients like the European Commision and major service providers like Seprotec.",
+                    success_title: "Success Story: Secure Translation & Search", success_desc: "We develop <strong>Custom, Private, Locally Hosted</strong> models that ensure <strong>Zero Data Leakage</strong> for high-security clients like the European and major service providers like Seprotec.",
                     link: "> View the technology we provide to Seprotec", stat_main: "Custom Private GPT-like LLMs", stat_sub: "Generative AI with Zero Data Leakage"
                 },
                 case3: {
@@ -952,12 +952,13 @@
             es: {
                 nav: { solutions: "Soluciones", work: "Casos de éxito", team: "Equipo", contact: "Contacto" },
                 hero: {
-                    geospatial: "INTELIGENCIA GEOESPACIAL", vision: "VISIÓN ARTIFICIAL", language: "LENGUAJE", complex: "SISTEMAS COMPLEJOS",
+                    geospatial: "INTELIGENCIA GEOESPACIAL", vision: "VISIÓN ARTIFICIAL", language: "MODELOS DE LENGUAJE", complex: "SISTEMAS COMPLEJOS",
                     title1: "Resolviendo complejidad", title2: "con inteligencia.",
                     subtitle: "Soluciones de Inteligencia Artificial para entornos críticos.",
                     cta: "Descubre nuestros proyectos"
                 },
                 solutions: { pre: "Líneas principales", title: "Nuestro stack tecnológico" },
+                portfolio: { pre: "Excelencia en Ingeniería de Inteligencia Artificial", title: "Muestra de trabajos" },
                 card: {
                     llm: { title: "Modelos de Lenguaje (LLMs)", desc: "Modelos tipo ChatGPT a medida para búsqueda y generación. Procesamiento multimodal (texto, audio, vídeo).", tag1: "Cero fuga de datos", tag2: "RAG Avanzado", tag3: "Análisis de documentos" },
                     cv: { title: "Visión Artificial", desc: "Percepción sobrehumana para entornos difíciles. Detección, identificación y seguimiento de objetos.", tag1: "Tracking de drones", tag2: "Tiempo Real", tag3: "Alta Precisión" },
