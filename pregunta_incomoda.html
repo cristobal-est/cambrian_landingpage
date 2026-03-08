@@ -53,7 +53,6 @@
         .section.visible { opacity: 1; transform: translateY(0); }
         .section.visible::after { opacity: 1; }
 
-        /* Fondos (mantengo la mayoría, pero puedes ajustar o reducir) */
         #msg0 {
             background: linear-gradient(135deg, #020202 0%, #070707 48%, #0b0808 100%);
         }
@@ -63,9 +62,7 @@
         #msg2 {
             background: linear-gradient(145deg, #020202 0%, #080808 52%, #0b0707 100%);
         }
-        /* Image background sections */
         #msg3 { background-image: url('https://thumbs.dreamstime.com/b/broken-chain-cracked-earth-under-divine-light-symbolizing-freedom-hope-heavy-metal-breaks-across-barren-ground-dramatic-416618295.jpg'); }
-        #msg4 { background-image: url('https://thumbs.dreamstime.com/b/broken-chain-cracked-earth-under-divine-light-symbolizing-freedom-hope-heavy-metal-breaks-across-barren-ground-dramatic-416618295.jpg'); }
         #msg5 { background-image: url('https://content.paulreiffer.com/wp-content/uploads/2022/03/Apple-Mac-Studio-Workflow-Editing-Photography-Setup-Dual-Display-XDR-27-Inch-Desk-M1-Ultra-Workstation-Digital-Digi-Tech-Digitech-Details-Second-Monitor-Screen-Vertical-iPad-Edit.jpg'); }
         #msg6 { background-image: url('https://i.ytimg.com/vi/UpZDjdgpSy0/sddefault.jpg'); }
 
@@ -119,7 +116,6 @@
             100% { transform: translate3d(0.35%, 0.18%, 0) scale(1.006); opacity: 0.8; }
         }
 
-
         #msg7::after,
         #msg-final::after {
             background:
@@ -158,7 +154,6 @@
             letter-spacing: 0.005em;
             text-wrap: balance;
         }
-        /* Frosted text box for image-background sections */
         .section.has-image h1 {
             background: rgba(0, 0, 0, 0.42);
             backdrop-filter: blur(20px) saturate(1.3);
@@ -224,13 +219,6 @@
             margin: 36px auto 40px;
             border: none;
         }
-        #msg-final .cta-button {
-            margin-top: 30px;
-            font-size: 1.2rem;
-            letter-spacing: 0.01em;
-            padding: 16px 38px;
-            backdrop-filter: blur(12px);
-        }
 
         .cta-button {
             display: inline-block;
@@ -251,31 +239,168 @@
             box-shadow: 0 14px 34px rgba(34, 86, 170, 0.24);
             border-color: rgba(255, 255, 255, 0.22);
         }
+
+        /* Hero fork — in normal flow, centered with the title */
+        .hero-fork {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            margin-top: 52px;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 1.2s ease 0.6s, transform 1.2s ease 0.6s;
+        }
+        .section.visible .hero-fork {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hero-fork-path {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            padding: 32px 40px 38px;
+            text-decoration: none;
+            color: rgba(255,255,255,0.5);
+            transition: color 0.4s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        .hero-fork-path:hover {
+            color: rgba(255,255,255,0.92);
+        }
+        .hero-fork-label {
+            font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+            font-weight: 300;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .hero-fork-icon {
+            width: 28px;
+            height: 28px;
+            position: relative;
+        }
+        .hero-fork-icon--down svg {
+            width: 28px;
+            height: 28px;
+            animation: gentleBob 2.8s ease-in-out infinite;
+        }
+        @keyframes gentleBob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(5px); }
+        }
+        .hero-fork-icon--right svg {
+            width: 22px;
+            height: 22px;
+            transition: transform 0.3s ease;
+        }
+        .hero-fork-path:hover .hero-fork-icon--right svg {
+            transform: translateX(4px);
+        }
+        .hero-fork-divider {
+            width: 1px;
+            background: rgba(255,255,255,0.12);
+            align-self: center;
+            height: 48px;
+            margin: 0 12px;
+        }
+
+        /* Final dual CTA */
+        .final-ctas {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #msg-final .cta-button {
+            margin-top: 0;
+            font-size: 1.2rem;
+            letter-spacing: 0.01em;
+            padding: 16px 38px;
+            backdrop-filter: blur(12px);
+        }
+        .cta-button--secondary {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.18);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .cta-button--secondary:hover {
+            background: rgba(255,255,255,0.14);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+        }
+        .cta-divider-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.28);
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 600px) {
+            .hero-fork-path {
+                padding: 24px 24px 30px;
+            }
+            .hero-fork-label {
+                font-size: 0.72rem;
+            }
+            .final-ctas {
+                flex-direction: column;
+                gap: 14px;
+            }
+            .cta-divider-dot {
+                display: none;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="section" id="msg0">
-        <h1>Una pregunta incómoda:<br><br>Si la IA cada vez hace más por tu negocio...<br><br>¿qué parte del negocio es tuya?</h1>
+        <h1>Una pregunta inc&#243;moda:<br><br>Si la IA cada vez hace m&#225;s por tu negocio...<br><br>&#191;qu&#233; parte del negocio es tuya?</h1>
+
+        <div class="hero-fork">
+            <a class="hero-fork-path" id="fork-scroll">
+                <span class="hero-fork-label">Descubre por qu&#233;</span>
+                <span class="hero-fork-icon hero-fork-icon--down">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 5v14M5 12l7 7 7-7"/>
+                    </svg>
+                </span>
+            </a>
+            <div class="hero-fork-divider"></div>
+            <a class="hero-fork-path" href="ia_local.html">
+                <span class="hero-fork-label">Ver productos</span>
+                <span class="hero-fork-icon hero-fork-icon--right">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </span>
+            </a>
+        </div>
     </div>
 
     <div class="section" id="msg1">
-        <h1>Las grandes plataformas ofrecen inteligencia barata y poderosa.<br><br>Pero con cada consulta que haces alimentas su ventaja.<br><br>Y en un futuro cercano van a replicar exactamente lo que tú ofreces.</h1>
+        <h1>Las grandes plataformas ofrecen inteligencia barata y poderosa.<br><br>Pero con cada consulta que haces, aprenden de ti.<br><br>Y en un futuro cercano van a replicar exactamente lo que t&#250; ofreces.</h1>
     </div>
 
     <div class="section" id="msg2">
-        <h1>Construir productos basados en sus servicios es cómodo, pero caro. Mientras tanto, sus usuarios directos disfrutan de IA gratis.<br><br>Tu creatividad y tu ventaja competitiva son ambas prestadas.</h1>
+        <h1>Construir un producto basado en sus IAs es c&#243;modo, pero muy costoso. Mientras tanto, sus usuarios directos disfrutan de IA gratis.<br><br>Tu creatividad y tu ventaja competitiva son ambas prestadas.</h1>
     </div>
 
     <div class="section has-image" id="msg3">
-        <h1>Pero existe una alternativa.<br><br>IA que vive en tu máquina.<br><br>Privada. Especializada. Tuya.</h1>
+        <h1>Pero existe una alternativa.<br><br>IA que vive en tu m&#225;quina.<br><br>Privada. Especializada. Tuya.</h1>
     </div>
 
     <div class="section has-image" id="msg4">
-        <h1>Adaptada a tu negocio: mucho más eficaz y eficiente que una IA general.<br><br>Tuya, no prestada, y siempre actualizada.<br><br>Para competir contra cualquiera, incluso contra ellos, y vencer.</h1>
+        <h1>Adaptada a tu negocio: mucho m&#225;s eficaz y eficiente que una IA general.<br><br>Tuya, no prestada, y siempre actualizada.<br><br>Para competir contra cualquiera, incluso contra ellos, y vencer.</h1>
     </div>
 
     <div class="section has-image" id="msg5">
-        <h1>Sin subscripciones que se encarecen cada año.<br><br>Sin dependencias que pueden matar tu negocio.<br><br>Sin enviar datos a la nube.<br><br>Hecha para lo que realmente importa: tu trabajo, tu visión.</h1>
+        <h1>Sin subscripciones que se encarecen cada a&#241;o.<br><br>Sin dependencias que pueden matar tu negocio.<br><br>Sin enviar datos a la nube.<br><br>Hecha para lo que realmente importa: tu trabajo, tu visi&#243;n.</h1>
     </div>
 
     <div class="section has-image" id="msg6">
@@ -283,7 +408,7 @@
     </div>
 
     <div class="section" id="msg7">
-        <h1>No alquiles inteligencia.<br><br>Conviértela en tuya.</h1>
+        <h1>No alquiles inteligencia.<br><br>Convi&#233;rtela en tuya.</h1>
     </div>
 
     <div class="section" id="msg-final">
@@ -295,20 +420,29 @@
         </div>
         <hr class="separator">
         <h1>IA para la gente que piensa</h1>
-        <a href="mailto:contacto@cambrianintelligence.com" class="cta-button">Ver nuestros productos</a>
+        <div class="final-ctas">
+            <a href="ia_local.html" class="cta-button">Ver nuestros productos</a>
+            <span class="cta-divider-dot"></span>
+            <a href="mailto:contacto&#64;cambrianintelligence.com" class="cta-button cta-button--secondary">contacto@cambrianintelligence.com</a>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const sections = document.querySelectorAll('.section');
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
+        document.addEventListener('DOMContentLoaded', function() {
+            var sections = document.querySelectorAll('.section');
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
                     }
                 });
             }, { threshold: 0.2 });
-            sections.forEach(section => observer.observe(section));
+            sections.forEach(function(section) { observer.observe(section); });
+
+            document.getElementById('fork-scroll').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('msg1').scrollIntoView({ behavior: 'smooth' });
+            });
         });
     </script>
 </body>
