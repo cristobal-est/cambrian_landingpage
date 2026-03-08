@@ -6,16 +6,15 @@
     <title>No Seas Reemplazado por la IA</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
             background-color: #0a0a0a;
             color: #ffffff;
-            overflow-x: hidden;
-            line-height: 1.8;
+            line-height: 1.6;
             font-size: 18px;
         }
         .section {
@@ -25,150 +24,278 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
             position: relative;
+            overflow: hidden;
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
         }
         .section::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(10, 10, 10, 0.75); /* Overlay oscuro para legibilidad */
+            inset: 0;
+            background: rgba(8, 8, 8, 0.7);
             z-index: 1;
         }
-        .section > * {
-            position: relative;
-            z-index: 2;
+        .section::after {
+            content: '';
+            position: absolute;
+            inset: -12%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.6s ease;
         }
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .section > * { position: relative; z-index: 2; }
+        .section.visible { opacity: 1; transform: translateY(0); }
+        .section.visible::after { opacity: 1; }
+
+        /* Fondos (mantengo la mayoría, pero puedes ajustar o reducir) */
+        #msg0 {
+            background: linear-gradient(135deg, #020202 0%, #070707 48%, #0b0808 100%);
         }
-        /* Fondos únicos y personalizados por sección */
-        #msg0 { background-image: url('https://thumbs.dreamstime.com/b/visually-striking-depiction-circuit-board-red-lights-intricate-pathways-connections-dark-background-emphasizes-436655293.jpg'); }
-        #msg1 { background-image: url('https://thumbs.dreamstime.com/b/abstract-futuristic-technology-circuit-board-red-blue-digital-design-background-data-glow-neon-cyber-lines-glowing-360256608.jpg'); }
-        #msg2 { background-image: url('https://thumbs.dreamstime.com/b/abstract-dark-technology-background-circuit-board-lines-glowing-red-dots-352095019.jpg'); }
-        #msg3 { background-image: url('https://thumbs.dreamstime.com/b/red-warning-symbol-glows-circuit-board-alert-notification-lights-up-danger-triangle-modern-technology-interface-cyber-413173400.jpg'); }
-        #msg4 { background-image: url('https://thumbs.dreamstime.com/b/red-alert-symbol-glowing-circuit-board-warning-triangle-illuminates-indicating-error-risk-digital-security-data-protection-385665599.jpg'); }
-        #msg5 { background-image: url('https://thumbs.dreamstime.com/b/broken-chain-cracked-earth-under-divine-light-symbolizing-freedom-hope-heavy-metal-breaks-across-barren-ground-dramatic-416618295.jpg'); }
-        #msg6 { background-image: url('https://as2.ftcdn.net/jpg/02/78/66/45/1000_F_278664575_57zUXJa2Cwnc9HKZmpAuFYEp1JxsXAjS.jpg'); }
-        #msg7 { background-image: url('https://content.paulreiffer.com/wp-content/uploads/2022/03/Apple-Mac-Studio-Workflow-Editing-Photography-Setup-Dual-Display-XDR-27-Inch-Desk-M1-Ultra-Workstation-Digital-Digi-Tech-Digitech-Details-Second-Monitor-Screen-Vertical-iPad-Edit.jpg'); }
-        #msg8 { background-image: url('https://i.ytimg.com/vi/UpZDjdgpSy0/sddefault.jpg'); }
-        #msg9 { background-image: url('https://preview.redd.it/dual-studio-displays-and-a-mac-studio-v0-h1fy3lkayt7f1.jpeg?auto=webp&s=f9d99544cc89b2b12570e8ee497c1aab779ce294'); }
-        #msg10 { 
-            background-image: url('https://img.freepik.com/free-vector/futuristic-background-circuit-board-style_23-2148727985.jpg?w=2000'); /* Grid futurista tech con toques de datos/IA para "elige tu camino" */
-            color: #121212; 
+        #msg1 {
+            background: linear-gradient(160deg, #030303 0%, #090909 52%, #0c0808 100%);
         }
-        #msg10::before { background: rgba(10, 10, 10, 0.65); } /* Overlay ajustado */
-        #msg-final { 
-            background-image: url('https://media.gettyimages.com/id/2155123808/photo/tech-team-professionals-collaborate-discuss-software-development-strategies-in-modern-office.jpg'); /* Equipo colaborando con workstations potentes, monitores múltiples, ambiente tech moderno */
-            background-blend-mode: overlay;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://media.gettyimages.com/id/2155123808/photo/tech-team-professionals-collaborate-discuss-software-development-strategies-in-modern-office.jpg');
-            color: #ffffff; /* Texto claro para mejor contraste con imagen de equipo */
+        #msg2 {
+            background: linear-gradient(145deg, #020202 0%, #080808 52%, #0b0707 100%);
         }
-        #msg-final::before { background: rgba(10, 10, 10, 0.55); } /* Overlay más ligero para mantener vibrancia y visibilidad del equipo */
+        /* Image background sections */
+        #msg3 { background-image: url('https://thumbs.dreamstime.com/b/broken-chain-cracked-earth-under-divine-light-symbolizing-freedom-hope-heavy-metal-breaks-across-barren-ground-dramatic-416618295.jpg'); }
+        #msg4 { background-image: url('https://thumbs.dreamstime.com/b/broken-chain-cracked-earth-under-divine-light-symbolizing-freedom-hope-heavy-metal-breaks-across-barren-ground-dramatic-416618295.jpg'); }
+        #msg5 { background-image: url('https://content.paulreiffer.com/wp-content/uploads/2022/03/Apple-Mac-Studio-Workflow-Editing-Photography-Setup-Dual-Display-XDR-27-Inch-Desk-M1-Ultra-Workstation-Digital-Digi-Tech-Digitech-Details-Second-Monitor-Screen-Vertical-iPad-Edit.jpg'); }
+        #msg6 { background-image: url('https://i.ytimg.com/vi/UpZDjdgpSy0/sddefault.jpg'); }
+
+        #msg3::before,
+        #msg4::before,
+        #msg5::before,
+        #msg6::before {
+            background: rgba(8, 8, 8, 0.25);
+        }
+        #msg7,
+        #msg-final {
+            background:
+                radial-gradient(140% 90% at 50% -8%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.22) 18%, rgba(255,255,255,0.00) 42%),
+                radial-gradient(120% 70% at 50% 18%, rgba(166, 227, 255, 0.58) 0%, rgba(166, 227, 255, 0.18) 22%, rgba(166,227,255,0.00) 44%),
+                linear-gradient(180deg, #d8f3ff 0%, #93d9ff 22%, #4caef7 48%, #1e74d9 74%, #0a2f78 100%);
+        }
+
+        #msg0::after,
+        #msg1::after,
+        #msg2::after {
+            background:
+                radial-gradient(circle at 8% 16%, rgba(255, 82, 82, 0.34) 0 0.14%, transparent 0.34%),
+                radial-gradient(circle at 16% 72%, rgba(255, 76, 76, 0.28) 0 0.12%, transparent 0.3%),
+                radial-gradient(circle at 24% 38%, rgba(255, 96, 96, 0.26) 0 0.1%, transparent 0.28%),
+                radial-gradient(circle at 33% 84%, rgba(255, 86, 86, 0.3) 0 0.12%, transparent 0.3%),
+                radial-gradient(circle at 41% 21%, rgba(255, 72, 72, 0.32) 0 0.12%, transparent 0.3%),
+                radial-gradient(circle at 52% 63%, rgba(255, 92, 92, 0.24) 0 0.11%, transparent 0.28%),
+                radial-gradient(circle at 61% 34%, rgba(255, 70, 70, 0.3) 0 0.1%, transparent 0.28%),
+                radial-gradient(circle at 74% 18%, rgba(255, 94, 94, 0.28) 0 0.12%, transparent 0.3%),
+                radial-gradient(circle at 82% 56%, rgba(255, 68, 68, 0.28) 0 0.11%, transparent 0.29%),
+                radial-gradient(circle at 91% 28%, rgba(255, 88, 88, 0.26) 0 0.1%, transparent 0.28%),
+                linear-gradient(90deg, transparent 7.8%, rgba(255,86,86,0.0) 8%, rgba(255,86,86,0.14) 8.04%, rgba(255,86,86,0.0) 8.08%, transparent 8.4%),
+                linear-gradient(90deg, transparent 25.8%, rgba(255,74,74,0.0) 26%, rgba(255,74,74,0.12) 26.04%, rgba(255,74,74,0.0) 26.08%, transparent 26.4%),
+                linear-gradient(90deg, transparent 49.8%, rgba(255,92,92,0.0) 50%, rgba(255,92,92,0.14) 50.04%, rgba(255,92,92,0.0) 50.08%, transparent 50.4%),
+                linear-gradient(90deg, transparent 71.8%, rgba(255,70,70,0.0) 72%, rgba(255,70,70,0.12) 72.04%, rgba(255,70,70,0.0) 72.08%, transparent 72.4%),
+                linear-gradient(90deg, transparent 87.8%, rgba(255,84,84,0.0) 88%, rgba(255,84,84,0.12) 88.04%, rgba(255,84,84,0.0) 88.08%, transparent 88.4%);
+            filter: blur(0.35px) saturate(132%);
+            mix-blend-mode: screen;
+            animation: crimsonMicroSignals 16s linear infinite alternate;
+            opacity: 0.94;
+        }
+
+        #msg1::after { animation-duration: 21s; animation-delay: -6s; }
+        #msg2::after { animation-duration: 18s; animation-delay: -11s; }
+
+        @keyframes crimsonMicroSignals {
+            0%   { transform: translate3d(-0.35%, 0.15%, 0) scale(1); opacity: 0.76; }
+            25%  { transform: translate3d(0.25%, -0.2%, 0) scale(1.003); opacity: 0.92; }
+            50%  { transform: translate3d(0.45%, 0.35%, 0) scale(1.007); opacity: 0.82; }
+            75%  { transform: translate3d(-0.15%, -0.3%, 0) scale(1.004); opacity: 0.95; }
+            100% { transform: translate3d(0.35%, 0.18%, 0) scale(1.006); opacity: 0.8; }
+        }
+
+
+        #msg7::after,
+        #msg-final::after {
+            background:
+                radial-gradient(120% 62% at 50% 8%, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.12) 20%, rgba(255,255,255,0) 42%),
+                radial-gradient(90% 40% at 20% 68%, rgba(217,244,255,0.18) 0%, rgba(217,244,255,0.08) 22%, rgba(217,244,255,0) 48%),
+                radial-gradient(96% 42% at 82% 62%, rgba(190,234,255,0.16) 0%, rgba(190,234,255,0.07) 20%, rgba(190,234,255,0) 46%);
+            animation: skyBreath 18s ease-in-out infinite alternate;
+            opacity: 0.95;
+        }
+
+        @keyframes skyBreath {
+            0% { transform: translate3d(0,-0.4%,0) scale(1); opacity: 0.82; }
+            100% { transform: translate3d(0,0.45%,0) scale(1.015); opacity: 1; }
+        }
+
+        #msg7::before,
+        #msg-final::before {
+            background: transparent;
+        }
 
         h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            max-width: 900px;
+            font-size: clamp(1.8rem, 2.6vw, 2.8rem);
+            font-weight: 300;
+            letter-spacing: -0.015em;
+            max-width: 980px;
             margin: 0 auto;
-            letter-spacing: -0.03em;
-            line-height: 1.15;
+            line-height: 1.35;
+            text-wrap: balance;
+            text-shadow: 0 8px 30px rgba(0, 0, 0, 0.32);
         }
         p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 20px auto 0;
+            font-size: clamp(1.04rem, 1.26vw, 1.24rem);
+            max-width: 820px;
+            margin: 24px auto;
+            font-weight: 300;
+            letter-spacing: 0.005em;
+            text-wrap: balance;
+        }
+        /* Frosted text box for image-background sections */
+        .section.has-image h1 {
+            background: rgba(0, 0, 0, 0.42);
+            backdrop-filter: blur(20px) saturate(1.3);
+            -webkit-backdrop-filter: blur(20px) saturate(1.3);
+            padding: 44px 52px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        #msg7 h1,
+        #msg-final h1 {
+            max-width: 1200px;
+            text-shadow: 0 10px 28px rgba(5, 16, 38, 0.22);
+        }
+        #msg-final {
+            text-align: center;
+        }
+        .pillars {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 48px;
+        }
+        .pillar {
+            font-size: clamp(1.6rem, 2.4vw, 2.6rem);
+            font-weight: 200;
+            letter-spacing: 0.04em;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+            text-shadow: 0 6px 24px rgba(5, 16, 38, 0.2);
+        }
+        .section.visible .pillar {
+            opacity: 0.92;
+            transform: translateY(0);
+        }
+        .section.visible .pillar:nth-child(1) { transition-delay: 0.1s; }
+        .section.visible .pillar:nth-child(2) { transition-delay: 0.3s; }
+        .section.visible .pillar:nth-child(3) { transition-delay: 0.5s; }
+        .section.visible .pillar:nth-child(4) { transition-delay: 0.75s; }
+        .pillar:last-child {
             font-weight: 400;
+            font-size: clamp(2rem, 3vw, 3.2rem);
+            margin-top: 8px;
         }
-        .options {
-            max-width: 1000px;
-            margin: 40px auto;
-            text-align: left;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+        .section.visible .pillar:last-child {
+            opacity: 1;
         }
-        .option {
-            padding: 30px;
-            background-color: rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .option:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-        }
-        .option h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
+        #msg-final h1 {
             margin-top: 0;
-            color: #ffd700;
+            font-size: clamp(1.8rem, 2.6vw, 2.8rem);
+            font-weight: 400;
+            opacity: 1;
+            letter-spacing: -0.015em;
+            text-transform: none;
         }
-        .option p {
-            font-size: 1.05rem;
-            color: #e0e0e0;
+        .separator {
+            width: 60px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.35);
+            margin: 36px auto 40px;
+            border: none;
         }
+        #msg-final .cta-button {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            letter-spacing: 0.01em;
+            padding: 16px 38px;
+            backdrop-filter: blur(12px);
+        }
+
         .cta-button {
             display: inline-block;
-            margin-top: 40px;
-            padding: 18px 48px;
-            background: linear-gradient(135deg, #ff8c00, #ff4500);
-            color: #ffffff;
+            margin-top: 32px;
+            padding: 15px 42px;
+            background: linear-gradient(135deg, rgba(8,18,40,0.76), rgba(255,255,255,0.12));
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            color: white;
             text-decoration: none;
             border-radius: 50px;
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-size: 1.14rem;
+            font-weight: 400;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(255, 140, 0, 0.5);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.12), 0 0 0 1px rgba(255,255,255,0.04);
         }
         .cta-button:hover {
-            transform: scale(1.08);
-            box-shadow: 0 10px 30px rgba(255, 140, 0, 0.7);
+            transform: scale(1.04);
+            box-shadow: 0 14px 34px rgba(34, 86, 170, 0.24);
+            border-color: rgba(255, 255, 255, 0.22);
         }
     </style>
 </head>
 <body>
     <div class="section" id="msg0">
-        <h1>Una pregunta incómoda:<br><br>Si la IA cada vez hace más<br>por tu negocio...<br>¿qué parte del negocio es tuya?</h1>
+        <h1>Una pregunta incómoda:<br><br>Si la IA cada vez hace más por tu negocio...<br><br>¿qué parte del negocio es tuya?</h1>
     </div>
+
     <div class="section" id="msg1">
-        <h1>Te hace más rápido, más eficiente... pero ¿y si al mismo tiempo te está llevando al abismo?</h1>
+        <h1>Las grandes plataformas ofrecen inteligencia barata y poderosa.<br><br>Pero con cada consulta que haces alimentas su ventaja.<br><br>Y en un futuro cercano van a replicar exactamente lo que tú ofreces.</h1>
     </div>
-    <div class="section" id="msg3">
-        <h1>Cuando las grandes IAs lancen un servicio dedicado a TU nicho, tu arte, tu comercio, tu visión, ¿qué harás?<br><br>Ellos tienen el elixir de la inteligencia a precio de ganga. Tú, mortal emprendedor, pagarás fortunas por gotas prestadas.</h1>
-    </div>
+
     <div class="section" id="msg2">
-        <h1>Un simple anuncio... y tu mundo se desmorona.<br><br>Estás a un tweet de ser prescindible.</h1>
+        <h1>Construir productos con sus servicios es cómodo, pero caro. Mientras tanto, sus usuarios disfrutan de IA gratis.<br><br>Tu creatividad y tu ventaja competitiva son ambas prestadas.</h1>
     </div>
-    <div class="section" id="msg4">
-        <h1>Esto no es cosa del futuro; es ahora. Construir productos con sus servicios es un lujo caro, un banquete para ellos. Mientras, sus usuarios devoran el festín gratuito. ¿Cuánto tiempo más resistirás antes de que te devoren a ti?</h1>
+
+    <div class="section has-image" id="msg3">
+        <h1>Pero existe una alternativa.<br><br>IA que vive en tu máquina.<br><br>Privada. Rápida. Tuya.</h1>
     </div>
-    <div class="section" id="msg5">
-        <h1>Pero escúchame, guerrero del emprendimiento: hay un camino de salvación. Un escudo forjado en el fuego de la independencia. No te rindas al destino; rebélate.</h1>
+
+    <div class="section has-image" id="msg4">
+        <h1>Sin dependencias ni suscripciones que se encarecerán año tras año.<br><br>Sin enviar datos a la nube.<br><br>Hecha para lo que realmente importa: tu trabajo, tu visión.</h1>
     </div>
-    <div class="section" id="msg6">
-        <h1>No seas un peón en el juego de otros. No un usuario más en su vasto imperio. No más alquilar inteligencias prestadas.<br><br>Toma el control.<br><br>Domina TU propia IA.<br><br>Sé el maestro, no el sirviente.</h1>
+
+    <div class="section has-image" id="msg5">
+        <h1>Hardware y software que caben en tu escritorio.<br><br>Potencia real, control total.</h1>
     </div>
+
+    <div class="section has-image" id="msg6">
+        <h1>IA especializada por ti mismo, en lo que te hace único.<br><br>Compite contra cualquiera, incluso contra ellos, y vence.<br><br>Porque la verdadera inteligencia no es prestada; es tuya.</h1>
+    </div>
+
     <div class="section" id="msg7">
-        <h1>Sistemas IA ligeros como el viento, locales como tu hogar, privados como tus secretos más profundos. Eficientes como un relámpago, efectivos como un golpe certero. Hechos a medida para TU negocio, con costes que desafían a los titanes.</h1>
+        <h1>No alquiles inteligencia.<br><br>Conviértela en tuya.</h1>
     </div>
-    <div class="section" id="msg8">
-        <h1>Especializados en lo que te hace único. Costes computacionales que caben en tu bolsillo, no en sus arcas infinitas.<br><br>Compite contra cualquiera, incluso contra ellos, y vence.<br><br>Porque la verdadera inteligencia no es prestada; es tuya.</h1>
-    </div>
-    <div class="section" id="msg9">
-        <h1>Te ayudamos con el hardware y software para que vueles alto.<br><br>La mejor IA en tu escritorio.</h1>
-    </div>
+
     <div class="section" id="msg-final">
-        <h1>No esperés al diluvio, construye tu arca ya.<br><br>Escríbenos ahora y reclama tu trono en la era de la inteligencia.</h1>
-        <a href="#contact" class="cta-button">contacto @ cambrianintelligence.com</a>
+        <div class="pillars">
+            <span class="pillar">Privada</span>
+            <span class="pillar">Especializada</span>
+            <span class="pillar">Siempre actualizada</span>
+            <span class="pillar">Tuya</span>
+        </div>
+        <hr class="separator">
+        <h1>Teina.ai: IA para la gente que piensa</h1>
+        <a href="mailto:contacto@cambrianintelligence.com" class="cta-button">Ver nuestros productos</a>
     </div>
 
     <script>
@@ -180,7 +307,7 @@
                         entry.target.classList.add('visible');
                     }
                 });
-            }, { threshold: 0.15 });
+            }, { threshold: 0.2 });
             sections.forEach(section => observer.observe(section));
         });
     </script>
