@@ -459,6 +459,137 @@
             border-color: rgba(255,255,255,0.45);
         }
 
+        /* ─── SPECIALTIES ─── */
+        .specialties-section { padding: 160px 0 80px; position: relative; }
+        .specialties-section::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 70% 50% at 50% 30%, rgba(245,201,122,0.03) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .specialties-header { text-align: center; margin-bottom: 80px; }
+        .specialties-header .eyebrow {
+            font-size: 0.78rem; font-weight: 400;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--warm); margin-bottom: 24px;
+        }
+        .specialties-header h2 {
+            font-family: var(--serif);
+            font-size: clamp(2rem, 3.5vw, 3rem);
+            font-weight: 300; font-style: italic;
+            letter-spacing: -0.015em;
+            color: var(--grey-100);
+        }
+        .specialties-header p {
+            font-size: 1.05rem; font-weight: 200;
+            color: var(--grey-200);
+            max-width: 620px;
+            margin: 24px auto 0;
+            line-height: 1.75;
+        }
+
+        .specialties-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+        .specialty-card {
+            padding: 48px 40px 44px;
+            background: rgba(255,255,255,0.018);
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        .specialty-card:hover {
+            background: rgba(255,255,255,0.032);
+            border-color: rgba(255,255,255,0.08);
+            transform: translateY(-4px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+        }
+        .specialty-icon {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+        .specialty-name {
+            font-family: var(--serif);
+            font-size: 1.4rem;
+            font-weight: 300; font-style: italic;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+        .specialty-status {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            width: fit-content;
+        }
+        .status-available {
+            color: #a8e6cf;
+            border: 1px solid rgba(168,230,207,0.25);
+            background: rgba(168,230,207,0.06);
+        }
+        .status-soon {
+            color: var(--grey-300);
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.03);
+        }
+        .specialty-desc {
+            font-size: 0.92rem;
+            font-weight: 200;
+            color: var(--grey-200);
+            line-height: 1.7;
+            flex-grow: 1;
+        }
+        .specialty-features {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .specialty-feature {
+            font-size: 0.78rem;
+            font-weight: 300;
+            color: var(--grey-300);
+            padding-left: 16px;
+            position: relative;
+        }
+        .specialty-feature::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--warm);
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+        .specialty-card.coming-soon {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: rgba(255,255,255,0.01);
+        }
+        .specialty-card.coming-soon .specialty-name {
+            color: var(--grey-300);
+            margin-bottom: 12px;
+        }
+        .specialty-card.coming-soon .specialty-desc {
+            color: var(--grey-300);
+            flex-grow: 0;
+            font-size: 0.88rem;
+        }
+
+        @media (max-width: 960px) {
+            .specialties-grid { grid-template-columns: 1fr; gap: 16px; }
+        }
+
         /* ─── PROCESS ─── */
         .process-section { padding: 160px 0; position: relative; }
         .process-section::before {
@@ -845,7 +976,7 @@
                 <!-- CARD 3 -->
                 <div class="product-card reveal reveal-delay-2">
                     <div class="card-badge badge-nube">Nube privada</div>
-                    <div class="card-name">IA en la nube</div>
+                    <div class="card-name">IA en nube propia</div>
                     <div class="card-tagline">Hardware dedicado, tu control</div>
                     <p class="card-desc">
                         Tu infraestructura en servidores cloud dedicados. Sin compartir con nadie, sin enviar datos a terceros. Flexibilidad de la nube con la privacidad de lo propio.
@@ -873,6 +1004,62 @@
                         <div class="card-include">Instalación y configuración</div>
                         <div class="card-include">Actualizaciones trimestrales 1 año</div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SPECIALTIES -->
+    <section class="specialties-section">
+        <div class="container">
+            <div class="specialties-header">
+                <div class="eyebrow reveal">Especialidades predefinidas</div>
+                <h2 class="reveal reveal-delay-1">Listo para trabajar desde el primer día</h2>
+                <p class="reveal reveal-delay-2">Cada producto se entrega con una configuración especializada según tu sector. Más eficaz que una IA genérica, más rápido que empezar de cero.</p>
+            </div>
+
+            <div class="specialties-grid">
+                <!-- GENERAL -->
+                <div class="specialty-card reveal">
+                    <div class="specialty-icon">◆</div>
+                    <div class="specialty-name">General</div>
+                    <div class="specialty-status status-available">Disponible</div>
+                    <p class="specialty-desc">
+                        La base de todos nuestros productos. Un sistema de IA generalista que configuras y adaptas a las necesidades específicas de tu negocio.
+                    </p>
+                    <div class="specialty-features">
+                        <div class="specialty-feature">Modelo optimizado para tu caso de uso</div>
+                        <div class="specialty-feature">Interfaz conversacional lista para usar</div>
+                        <div class="specialty-feature">Adaptable a cualquier sector</div>
+                    </div>
+                </div>
+
+                <!-- LEGAL -->
+                <div class="specialty-card reveal reveal-delay-1">
+                    <div class="specialty-icon">§</div>
+                    <div class="specialty-name">Legal</div>
+                    <div class="specialty-status status-available">Disponible</div>
+                    <p class="specialty-desc">
+                        IA preconfigurada con la legislación vigente del país, organizada por ramas del derecho: civil, mercantil, penal, laboral, administrativo. Consulta normativa al instante sin depender de servicios externos.
+                    </p>
+                    <div class="specialty-features">
+                        <div class="specialty-feature">Corpus legislativo completo e indexado</div>
+                        <div class="specialty-feature">Organización por ramas del derecho</div>
+                        <div class="specialty-feature">Navegación automática de bases de datos judiciales</div>
+                        <div class="specialty-feature">Actualizaciones normativas periódicas</div>
+                    </div>
+                </div>
+
+                <!-- COMING SOON -->
+                <div class="specialty-card coming-soon reveal reveal-delay-2">
+                    <div class="specialty-icon" style="font-size: 1.3rem;">+ + +</div>
+                    <div class="specialty-name">Más especialidades</div>
+                    <div class="specialty-status status-soon">Próximamente</div>
+                    <p class="specialty-desc">
+                        Nuevos verticales en desarrollo. Si tu sector necesita una especialización concreta, hablemos.
+                    </p>
                 </div>
             </div>
         </div>
