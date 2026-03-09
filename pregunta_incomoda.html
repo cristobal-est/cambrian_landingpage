@@ -8,15 +8,138 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        *,*::before,*::after{box-sizing:border-box}
+
+        :root {
+            --noir: #06060a;
+            --ember: #ff4538;
+            --ember-dim: rgba(255,69,56,0.06);
+            --sky-top: #d8f3ff;
+            --sky-mid: #4caef7;
+            --sky-deep: #0a2f78;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
             padding: 0;
             font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-            background-color: #0a0a0a;
+            background-color: var(--noir);
             color: #ffffff;
             line-height: 1.6;
             font-size: 18px;
+            overflow-x: hidden;
         }
+
+        /* ── Grain overlay (entire page) ── */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.032;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 180px;
+        }
+
+        /* ── Seamless flowing background canvas ── */
+        .bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Atmospheric ambient layer — dark ember threat zone */
+        .bg-layer {
+            position: absolute;
+            inset: 0;
+            transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .bg-layer--dark {
+            background:
+                radial-gradient(ellipse 120% 80% at 20% 30%, rgba(180,30,20,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse 100% 60% at 80% 70%, rgba(200,40,30,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 120% at 50% 50%, rgba(12,8,8,1) 0%, var(--noir) 100%);
+            opacity: 1;
+        }
+
+        /* Warm turning point — chain breaking, hope emerging */
+        .bg-layer--warm {
+            background:
+                radial-gradient(ellipse 90% 70% at 30% 40%, rgba(255,140,60,0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 110% 80% at 70% 60%, rgba(255,100,40,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 100% at 50% 50%, rgba(18,14,10,1) 0%, #0a0a0a 100%);
+            opacity: 0;
+        }
+
+        /* Cool tech clarity — private, on your machine */
+        .bg-layer--cool {
+            background:
+                radial-gradient(ellipse 100% 70% at 40% 35%, rgba(60,130,200,0.07) 0%, transparent 55%),
+                radial-gradient(ellipse 80% 90% at 65% 65%, rgba(40,90,180,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse 100% 100% at 50% 50%, rgba(8,12,20,1) 0%, #060810 100%);
+            opacity: 0;
+        }
+
+        /* Sky liberation — final ascent */
+        .bg-layer--sky {
+            background:
+                radial-gradient(140% 90% at 50% -8%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.22) 18%, rgba(255,255,255,0.00) 42%),
+                radial-gradient(120% 70% at 50% 18%, rgba(166, 227, 255, 0.58) 0%, rgba(166, 227, 255, 0.18) 22%, rgba(166,227,255,0.00) 44%),
+                linear-gradient(180deg, #d8f3ff 0%, #93d9ff 22%, #4caef7 48%, #1e74d9 74%, #0a2f78 100%);
+            opacity: 0;
+        }
+
+        /* Floating ambient light orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 2s ease, transform 2s ease;
+        }
+        .orb--1 {
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(255,60,40,0.12) 0%, transparent 70%);
+            top: -10%; left: -10%;
+            animation: orbFloat1 24s ease-in-out infinite alternate;
+        }
+        .orb--2 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(200,40,30,0.08) 0%, transparent 70%);
+            bottom: -5%; right: -8%;
+            animation: orbFloat2 20s ease-in-out infinite alternate;
+        }
+        .orb--3 {
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(80,160,240,0.1) 0%, transparent 70%);
+            top: 20%; right: -15%;
+            animation: orbFloat3 28s ease-in-out infinite alternate;
+        }
+
+        @keyframes orbFloat1 {
+            0%   { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(80px, 60px) scale(1.15); }
+        }
+        @keyframes orbFloat2 {
+            0%   { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-60px, -40px) scale(1.1); }
+        }
+        @keyframes orbFloat3 {
+            0%   { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-40px, 80px) scale(1.2); }
+        }
+
+        /* ── Sections ── */
         .section {
             min-height: 100vh;
             display: flex;
@@ -24,128 +147,95 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 40px 20px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            padding: 60px 28px;
             position: relative;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
+            z-index: 2;
         }
+
+        /* Fade-in on scroll */
+        .section > .content-wrap {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .section.visible > .content-wrap {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Subtle section-level ambient light (no hard borders) */
         .section::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(8, 8, 8, 0.7);
-            z-index: 1;
-        }
-        .section::after {
-            content: '';
-            position: absolute;
-            inset: -12%;
-            z-index: 1;
             pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.6s ease;
+            z-index: 0;
         }
-        .section > * { position: relative; z-index: 2; }
-        .section.visible { opacity: 1; transform: translateY(0); }
-        .section.visible::after { opacity: 1; }
 
-        #msg0 {
-            background: linear-gradient(135deg, #020202 0%, #070707 48%, #0b0808 100%);
-        }
-        #msg1 {
-            background: linear-gradient(160deg, #030303 0%, #090909 52%, #0c0808 100%);
-        }
-        #msg2 {
-            background: linear-gradient(145deg, #020202 0%, #080808 52%, #0b0707 100%);
-        }
-        #msg3 { background-image: url('https://thumbs.dreamstime.com/b/broken-chain-cracked-earth-under-divine-light-symbolizing-freedom-hope-heavy-metal-breaks-across-barren-ground-dramatic-416618295.jpg'); }
-        #msg5 { background-image: url('https://content.paulreiffer.com/wp-content/uploads/2022/03/Apple-Mac-Studio-Workflow-Editing-Photography-Setup-Dual-Display-XDR-27-Inch-Desk-M1-Ultra-Workstation-Digital-Digi-Tech-Digitech-Details-Second-Monitor-Screen-Vertical-iPad-Edit.jpg'); }
-        #msg6 { background-image: url('https://i.ytimg.com/vi/UpZDjdgpSy0/sddefault.jpg'); }
-
-        #msg3::before,
-        #msg4::before,
-        #msg5::before,
-        #msg6::before {
-            background: rgba(8, 8, 8, 0.25);
-        }
-        #msg7,
-        #msg-final {
+        /* Dark threat sections — faint red scan lines */
+        .zone-dark::before {
             background:
-                radial-gradient(140% 90% at 50% -8%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.22) 18%, rgba(255,255,255,0.00) 42%),
-                radial-gradient(120% 70% at 50% 18%, rgba(166, 227, 255, 0.58) 0%, rgba(166, 227, 255, 0.18) 22%, rgba(166,227,255,0.00) 44%),
-                linear-gradient(180deg, #d8f3ff 0%, #93d9ff 22%, #4caef7 48%, #1e74d9 74%, #0a2f78 100%);
+                repeating-linear-gradient(
+                    180deg,
+                    transparent,
+                    transparent 3px,
+                    rgba(255,60,40,0.012) 3px,
+                    rgba(255,60,40,0.012) 4px
+                );
+            animation: scanDrift 12s linear infinite;
+        }
+        @keyframes scanDrift {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 200px; }
         }
 
-        #msg0::after,
-        #msg1::after,
-        #msg2::after {
+        /* Transition zone — subtle golden vignette */
+        .zone-turn::before {
+            background: radial-gradient(ellipse 80% 50% at 50% 50%, rgba(255,180,80,0.03) 0%, transparent 70%);
+        }
+
+        /* Tech zone — faint blue grid hint */
+        .zone-tech::before {
             background:
-                radial-gradient(circle at 8% 16%, rgba(255, 82, 82, 0.34) 0 0.14%, transparent 0.34%),
-                radial-gradient(circle at 16% 72%, rgba(255, 76, 76, 0.28) 0 0.12%, transparent 0.3%),
-                radial-gradient(circle at 24% 38%, rgba(255, 96, 96, 0.26) 0 0.1%, transparent 0.28%),
-                radial-gradient(circle at 33% 84%, rgba(255, 86, 86, 0.3) 0 0.12%, transparent 0.3%),
-                radial-gradient(circle at 41% 21%, rgba(255, 72, 72, 0.32) 0 0.12%, transparent 0.3%),
-                radial-gradient(circle at 52% 63%, rgba(255, 92, 92, 0.24) 0 0.11%, transparent 0.28%),
-                radial-gradient(circle at 61% 34%, rgba(255, 70, 70, 0.3) 0 0.1%, transparent 0.28%),
-                radial-gradient(circle at 74% 18%, rgba(255, 94, 94, 0.28) 0 0.12%, transparent 0.3%),
-                radial-gradient(circle at 82% 56%, rgba(255, 68, 68, 0.28) 0 0.11%, transparent 0.29%),
-                radial-gradient(circle at 91% 28%, rgba(255, 88, 88, 0.26) 0 0.1%, transparent 0.28%),
-                linear-gradient(90deg, transparent 7.8%, rgba(255,86,86,0.0) 8%, rgba(255,86,86,0.14) 8.04%, rgba(255,86,86,0.0) 8.08%, transparent 8.4%),
-                linear-gradient(90deg, transparent 25.8%, rgba(255,74,74,0.0) 26%, rgba(255,74,74,0.12) 26.04%, rgba(255,74,74,0.0) 26.08%, transparent 26.4%),
-                linear-gradient(90deg, transparent 49.8%, rgba(255,92,92,0.0) 50%, rgba(255,92,92,0.14) 50.04%, rgba(255,92,92,0.0) 50.08%, transparent 50.4%),
-                linear-gradient(90deg, transparent 71.8%, rgba(255,70,70,0.0) 72%, rgba(255,70,70,0.12) 72.04%, rgba(255,70,70,0.0) 72.08%, transparent 72.4%),
-                linear-gradient(90deg, transparent 87.8%, rgba(255,84,84,0.0) 88%, rgba(255,84,84,0.12) 88.04%, rgba(255,84,84,0.0) 88.08%, transparent 88.4%);
-            filter: blur(0.35px) saturate(132%);
-            mix-blend-mode: screen;
-            animation: crimsonMicroSignals 16s linear infinite alternate;
-            opacity: 0.94;
+                radial-gradient(ellipse 60% 40% at 50% 50%, rgba(60,140,220,0.025) 0%, transparent 70%);
         }
 
-        #msg1::after { animation-duration: 21s; animation-delay: -6s; }
-        #msg2::after { animation-duration: 18s; animation-delay: -11s; }
-
-        @keyframes crimsonMicroSignals {
-            0%   { transform: translate3d(-0.35%, 0.15%, 0) scale(1); opacity: 0.76; }
-            25%  { transform: translate3d(0.25%, -0.2%, 0) scale(1.003); opacity: 0.92; }
-            50%  { transform: translate3d(0.45%, 0.35%, 0) scale(1.007); opacity: 0.82; }
-            75%  { transform: translate3d(-0.15%, -0.3%, 0) scale(1.004); opacity: 0.95; }
-            100% { transform: translate3d(0.35%, 0.18%, 0) scale(1.006); opacity: 0.8; }
+        /* Sky zone */
+        .zone-sky {
+            color: #0a1e3a;
         }
-
-        #msg7::after,
-        #msg-final::after {
+        .zone-sky::before {
             background:
-                radial-gradient(120% 62% at 50% 8%, rgba(255,255,255,0.42) 0%, rgba(255,255,255,0.12) 20%, rgba(255,255,255,0) 42%),
-                radial-gradient(90% 40% at 20% 68%, rgba(217,244,255,0.18) 0%, rgba(217,244,255,0.08) 22%, rgba(217,244,255,0) 48%),
-                radial-gradient(96% 42% at 82% 62%, rgba(190,234,255,0.16) 0%, rgba(190,234,255,0.07) 20%, rgba(190,234,255,0) 46%);
+                radial-gradient(120% 62% at 50% 8%, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.08) 20%, transparent 42%);
             animation: skyBreath 18s ease-in-out infinite alternate;
-            opacity: 0.95;
         }
-
         @keyframes skyBreath {
-            0% { transform: translate3d(0,-0.4%,0) scale(1); opacity: 0.82; }
+            0% { transform: translate3d(0,-0.4%,0) scale(1); opacity: 0.7; }
             100% { transform: translate3d(0,0.45%,0) scale(1.015); opacity: 1; }
         }
 
-        #msg7::before,
-        #msg-final::before {
-            background: transparent;
-        }
-
+        /* ── Typography ── */
         h1 {
             font-size: clamp(1.8rem, 2.6vw, 2.8rem);
             font-weight: 300;
             letter-spacing: -0.015em;
             max-width: 980px;
             margin: 0 auto;
-            line-height: 1.35;
+            line-height: 1.4;
             text-wrap: balance;
-            text-shadow: 0 8px 30px rgba(0, 0, 0, 0.32);
         }
+
+        .zone-dark h1,
+        .zone-turn h1,
+        .zone-tech h1 {
+            text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+        }
+
+        .zone-sky h1 {
+            text-shadow: 0 4px 24px rgba(5,16,38,0.15);
+            max-width: 1200px;
+        }
+
         p {
             font-size: clamp(1.04rem, 1.26vw, 1.24rem);
             max-width: 820px;
@@ -154,96 +244,9 @@
             letter-spacing: 0.005em;
             text-wrap: balance;
         }
-        .section.has-image h1 {
-            background: rgba(0, 0, 0, 0.42);
-            backdrop-filter: blur(20px) saturate(1.3);
-            -webkit-backdrop-filter: blur(20px) saturate(1.3);
-            padding: 44px 52px;
-            border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255,255,255,0.05);
-        }
 
-        #msg7 h1,
-        #msg-final h1 {
-            max-width: 1200px;
-            text-shadow: 0 10px 28px rgba(5, 16, 38, 0.22);
-        }
-        #msg-final {
-            text-align: center;
-        }
-        .pillars {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 48px;
-        }
-        .pillar {
-            font-size: clamp(1.6rem, 2.4vw, 2.6rem);
-            font-weight: 200;
-            letter-spacing: 0.04em;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-            text-shadow: 0 6px 24px rgba(5, 16, 38, 0.2);
-        }
-        .section.visible .pillar {
-            opacity: 0.92;
-            transform: translateY(0);
-        }
-        .section.visible .pillar:nth-child(1) { transition-delay: 0.1s; }
-        .section.visible .pillar:nth-child(2) { transition-delay: 0.3s; }
-        .section.visible .pillar:nth-child(3) { transition-delay: 0.5s; }
-        .section.visible .pillar:nth-child(4) { transition-delay: 0.75s; }
-        .pillar:last-child {
-            font-weight: 400;
-            font-size: clamp(2rem, 3vw, 3.2rem);
-            margin-top: 8px;
-        }
-        .section.visible .pillar:last-child {
-            opacity: 1;
-        }
-        #msg-final h1 {
-            margin-top: 0;
-            font-size: clamp(1.8rem, 2.6vw, 2.8rem);
-            font-weight: 400;
-            opacity: 1;
-            letter-spacing: -0.015em;
-            text-transform: none;
-        }
-        .separator {
-            width: 60px;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.35);
-            margin: 36px auto 40px;
-            border: none;
-        }
-
-        .cta-button {
-            display: inline-block;
-            margin-top: 32px;
-            padding: 15px 42px;
-            background: linear-gradient(135deg, rgba(8,18,40,0.76), rgba(255,255,255,0.12));
-            border: 1px solid rgba(255, 255, 255, 0.22);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-size: 1.14rem;
-            font-weight: 400;
-            transition: all 0.3s ease;
-            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255,255,255,0.12), 0 0 0 1px rgba(255,255,255,0.04);
-        }
-        .cta-button:hover {
-            transform: scale(1.04);
-            box-shadow: 0 14px 34px rgba(34, 86, 170, 0.24);
-            border-color: rgba(255, 255, 255, 0.22);
-        }
-
-        /* Hero fork — in normal flow, centered with the title */
+        /* ── Hero fork ── */
         .hero-fork {
-            position: relative;
-            z-index: 3;
             display: flex;
             justify-content: center;
             align-items: stretch;
@@ -263,29 +266,23 @@
             gap: 14px;
             padding: 32px 40px 38px;
             text-decoration: none;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.45);
             transition: color 0.4s ease;
             cursor: pointer;
-            position: relative;
         }
         .hero-fork-path:hover {
             color: rgba(255,255,255,0.92);
         }
         .hero-fork-label {
-            font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+            font-size: clamp(0.74rem, 0.88vw, 0.86rem);
             font-weight: 300;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
             white-space: nowrap;
         }
-        .hero-fork-icon {
-            width: 28px;
-            height: 28px;
-            position: relative;
-        }
+        .hero-fork-icon { width: 28px; height: 28px; }
         .hero-fork-icon--down svg {
-            width: 28px;
-            height: 28px;
+            width: 28px; height: 28px;
             animation: gentleBob 2.8s ease-in-out infinite;
         }
         @keyframes gentleBob {
@@ -293,8 +290,7 @@
             50% { transform: translateY(5px); }
         }
         .hero-fork-icon--right svg {
-            width: 22px;
-            height: 22px;
+            width: 22px; height: 22px;
             transition: transform 0.3s ease;
         }
         .hero-fork-path:hover .hero-fork-icon--right svg {
@@ -302,13 +298,98 @@
         }
         .hero-fork-divider {
             width: 1px;
-            background: rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.1);
             align-self: center;
             height: 48px;
             margin: 0 12px;
         }
 
-        /* Final dual CTA */
+        /* ── Decorative accent lines ── */
+        .accent-line {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .accent-line--left {
+            left: 6vw;
+            top: 15%;
+            width: 1px;
+            height: 70%;
+            background: linear-gradient(180deg, transparent, rgba(255,255,255,0.04) 30%, rgba(255,255,255,0.04) 70%, transparent);
+        }
+        .accent-line--right {
+            right: 6vw;
+            top: 10%;
+            width: 1px;
+            height: 80%;
+            background: linear-gradient(180deg, transparent, rgba(255,255,255,0.03) 40%, rgba(255,255,255,0.03) 60%, transparent);
+        }
+
+        /* ── Pillars (final section) ── */
+        .pillars {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 48px;
+        }
+        .pillar {
+            font-size: clamp(1.6rem, 2.4vw, 2.6rem);
+            font-weight: 200;
+            letter-spacing: 0.04em;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+            text-shadow: 0 6px 24px rgba(5,16,38,0.15);
+        }
+        .section.visible .pillar { opacity: 0.92; transform: translateY(0); }
+        .section.visible .pillar:nth-child(1) { transition-delay: 0.1s; }
+        .section.visible .pillar:nth-child(2) { transition-delay: 0.3s; }
+        .section.visible .pillar:nth-child(3) { transition-delay: 0.5s; }
+        .section.visible .pillar:nth-child(4) { transition-delay: 0.75s; }
+        .pillar:last-child {
+            font-weight: 400;
+            font-size: clamp(2rem, 3vw, 3.2rem);
+            margin-top: 8px;
+        }
+        .section.visible .pillar:last-child { opacity: 1; }
+
+        .separator {
+            width: 60px;
+            height: 1px;
+            background: rgba(10,30,58,0.25);
+            margin: 36px auto 40px;
+            border: none;
+        }
+
+        /* ── CTAs ── */
+        .cta-button {
+            display: inline-block;
+            margin-top: 32px;
+            padding: 15px 42px;
+            background: linear-gradient(135deg, rgba(8,18,40,0.76), rgba(255,255,255,0.12));
+            border: 1px solid rgba(255,255,255,0.22);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.14rem;
+            font-weight: 400;
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            box-shadow:
+                0 14px 34px rgba(0,0,0,0.28),
+                inset 0 1px 0 rgba(255,255,255,0.12),
+                0 0 0 1px rgba(255,255,255,0.04);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .cta-button:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow:
+                0 20px 44px rgba(34,86,170,0.2),
+                inset 0 1px 0 rgba(255,255,255,0.18),
+                0 0 0 1px rgba(255,255,255,0.08);
+        }
+
         .final-ctas {
             display: flex;
             align-items: center;
@@ -317,133 +398,294 @@
             flex-wrap: wrap;
             justify-content: center;
         }
-        #msg-final .cta-button {
+        .final-ctas .cta-button {
             margin-top: 0;
             font-size: 1.2rem;
             letter-spacing: 0.01em;
             padding: 16px 38px;
-            backdrop-filter: blur(12px);
+            color: #0a1e3a;
+            border-color: rgba(10,30,58,0.18);
+            background: linear-gradient(135deg, rgba(255,255,255,0.5), rgba(255,255,255,0.15));
+            box-shadow: 0 12px 30px rgba(10,40,100,0.12), inset 0 1px 0 rgba(255,255,255,0.4);
+        }
+        .final-ctas .cta-button:hover {
+            background: linear-gradient(135deg, rgba(255,255,255,0.65), rgba(255,255,255,0.25));
+            box-shadow: 0 16px 40px rgba(10,40,100,0.18), inset 0 1px 0 rgba(255,255,255,0.5);
         }
         .cta-button--secondary {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.18);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.08) !important;
+            border: 1px solid rgba(10,30,58,0.14) !important;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.2) !important;
         }
         .cta-button--secondary:hover {
-            background: rgba(255,255,255,0.14);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.22);
+            background: rgba(255,255,255,0.18) !important;
         }
         .cta-divider-dot {
-            width: 4px;
-            height: 4px;
+            width: 4px; height: 4px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.28);
+            background: rgba(10,30,58,0.2);
             flex-shrink: 0;
         }
 
+        /* ── Smooth section dividers (gradient fades) ── */
+        .section-fade {
+            position: relative;
+            z-index: 2;
+            height: 0;
+            overflow: visible;
+        }
+        .section-fade::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0;
+            bottom: -1px;
+            height: 200px;
+            pointer-events: none;
+        }
+
+        /* ── Progress bar ── */
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--ember), var(--sky-mid));
+            z-index: 10000;
+            width: 0%;
+            transition: width 0.15s linear;
+            opacity: 0.7;
+        }
+
+        /* ── Mobile ── */
         @media (max-width: 600px) {
-            .hero-fork-path {
-                padding: 24px 24px 30px;
-            }
-            .hero-fork-label {
-                font-size: 0.72rem;
-            }
-            .final-ctas {
-                flex-direction: column;
-                gap: 14px;
-            }
-            .cta-divider-dot {
-                display: none;
-            }
+            .section { padding: 40px 20px; }
+            .hero-fork-path { padding: 24px 24px 30px; }
+            .hero-fork-label { font-size: 0.72rem; }
+            .final-ctas { flex-direction: column; gap: 14px; }
+            .cta-divider-dot { display: none; }
+            .accent-line { display: none; }
+            .orb { transform: scale(0.5); }
         }
     </style>
 </head>
 <body>
-    <div class="section" id="msg0">
-        <h1>Una pregunta inc&#243;moda:<br><br>Si la IA cada vez hace m&#225;s por tu negocio...<br><br>&#191;qu&#233; parte del negocio es tuya?</h1>
 
-        <div class="hero-fork">
-            <a class="hero-fork-path" id="fork-scroll">
-                <span class="hero-fork-label">Descubre por qu&#233;</span>
-                <span class="hero-fork-icon hero-fork-icon--down">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 5v14M5 12l7 7 7-7"/>
-                    </svg>
-                </span>
-            </a>
-            <div class="hero-fork-divider"></div>
-            <a class="hero-fork-path" href="ia_local.html">
-                <span class="hero-fork-label">Ver productos</span>
-                <span class="hero-fork-icon hero-fork-icon--right">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </span>
-            </a>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Fixed atmospheric background that morphs as you scroll -->
+    <div class="bg-canvas">
+        <div class="bg-layer bg-layer--dark" id="bgDark"></div>
+        <div class="bg-layer bg-layer--warm" id="bgWarm"></div>
+        <div class="bg-layer bg-layer--cool" id="bgCool"></div>
+        <div class="bg-layer bg-layer--sky"  id="bgSky"></div>
+    </div>
+
+    <!-- Floating light orbs -->
+    <div class="orb orb--1" id="orb1"></div>
+    <div class="orb orb--2" id="orb2"></div>
+    <div class="orb orb--3" id="orb3"></div>
+
+    <!-- ═══════════ SECTIONS ═══════════ -->
+
+    <div class="section zone-dark" id="msg0">
+        <div class="accent-line accent-line--left"></div>
+        <div class="accent-line accent-line--right"></div>
+        <div class="content-wrap">
+            <h1>Una pregunta inc&#243;moda:<br><br>Si la IA cada vez hace m&#225;s por tu negocio...<br><br>&#191;qu&#233; parte del negocio es tuya?</h1>
+
+            <div class="hero-fork">
+                <a class="hero-fork-path" id="fork-scroll">
+                    <span class="hero-fork-label">Descubre por qu&#233;</span>
+                    <span class="hero-fork-icon hero-fork-icon--down">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 5v14M5 12l7 7 7-7"/>
+                        </svg>
+                    </span>
+                </a>
+                <div class="hero-fork-divider"></div>
+                <a class="hero-fork-path" href="ia_local.html">
+                    <span class="hero-fork-label">Ver productos</span>
+                    <span class="hero-fork-icon hero-fork-icon--right">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </span>
+                </a>
+            </div>
         </div>
     </div>
 
-    <div class="section" id="msg1">
-        <h1>Las grandes plataformas ofrecen inteligencia barata y poderosa.<br><br>Pero con cada consulta que haces, aprenden de ti.<br><br>Y en un futuro cercano van a replicar exactamente lo que t&#250; ofreces.</h1>
-    </div>
-
-    <div class="section" id="msg2">
-        <h1>Construir un producto basado en sus IAs es c&#243;modo, pero muy costoso. Mientras tanto, sus usuarios directos disfrutan de IA gratis.<br><br>Tu creatividad y tu ventaja competitiva son ambas prestadas.</h1>
-    </div>
-
-    <div class="section has-image" id="msg3">
-        <h1>Pero existe una alternativa.<br><br>IA que vive en tu m&#225;quina.<br><br>Privada. Especializada. Tuya.</h1>
-    </div>
-
-    <div class="section has-image" id="msg4">
-        <h1>Adaptada a tu negocio: mucho m&#225;s eficaz y eficiente que una IA general.<br><br>Tuya, no prestada, y siempre actualizada.<br><br>Para competir contra cualquiera, incluso contra ellos, y vencer.</h1>
-    </div>
-
-    <div class="section has-image" id="msg5">
-        <h1>Sin subscripciones que se encarecen cada a&#241;o.<br><br>Sin dependencias que pueden matar tu negocio.<br><br>Sin enviar datos a la nube.<br><br>Hecha para lo que realmente importa: tu trabajo, tu visi&#243;n.</h1>
-    </div>
-
-    <div class="section has-image" id="msg6">
-        <h1>Hardware y software que caben en tu escritorio.<br><br>Potencia real, control total.</h1>
-    </div>
-
-    <div class="section" id="msg7">
-        <h1>No alquiles inteligencia.<br><br>Convi&#233;rtela en tuya.</h1>
-    </div>
-
-    <div class="section" id="msg-final">
-        <div class="pillars">
-            <span class="pillar">Privada</span>
-            <span class="pillar">Especializada</span>
-            <span class="pillar">Siempre actualizada</span>
-            <span class="pillar">Tuya</span>
+    <div class="section zone-dark" id="msg1">
+        <div class="content-wrap">
+            <h1>Las grandes plataformas ofrecen inteligencia barata y poderosa.<br><br>Pero con cada consulta que haces, aprenden de ti.<br><br>Y en un futuro cercano van a replicar exactamente lo que t&#250; ofreces.</h1>
         </div>
-        <hr class="separator">
-        <h1>IA para la gente que piensa</h1>
-        <div class="final-ctas">
-            <a href="ia_local.html" class="cta-button">Ver nuestros productos</a>
-            <span class="cta-divider-dot"></span>
-            <a href="mailto:contacto&#64;cambrianintelligence.com" class="cta-button cta-button--secondary">contacto@cambrianintelligence.com</a>
+    </div>
+
+    <div class="section zone-dark" id="msg2">
+        <div class="content-wrap">
+            <h1>Construir un producto basado en sus IAs es c&#243;modo, pero muy costoso. Mientras tanto, sus usuarios directos disfrutan de IA gratis.<br><br>Tu creatividad y tu ventaja competitiva son ambas prestadas.</h1>
+        </div>
+    </div>
+
+    <div class="section zone-turn" id="msg3">
+        <div class="content-wrap">
+            <h1>Pero existe una alternativa.<br><br>IA que vive en tu m&#225;quina.<br><br>Privada. Especializada. Tuya.</h1>
+        </div>
+    </div>
+
+    <div class="section zone-turn" id="msg4">
+        <div class="content-wrap">
+            <h1>Adaptada a tu negocio: mucho m&#225;s eficaz y eficiente que una IA general.<br><br>Tuya, no prestada, y siempre actualizada.<br><br>Para competir contra cualquiera, incluso contra ellos, y vencer.</h1>
+        </div>
+    </div>
+
+    <div class="section zone-tech" id="msg5">
+        <div class="content-wrap">
+            <h1>Sin subscripciones que se encarecen cada a&#241;o.<br><br>Sin dependencias que pueden matar tu negocio.<br><br>Sin enviar datos a la nube.<br><br>Hecha para lo que realmente importa: tu trabajo, tu visi&#243;n.</h1>
+        </div>
+    </div>
+
+    <div class="section zone-tech" id="msg6">
+        <div class="content-wrap">
+            <h1>Hardware y software que caben en tu escritorio.<br><br>Potencia real, control total.</h1>
+        </div>
+    </div>
+
+    <div class="section zone-sky" id="msg7">
+        <div class="content-wrap">
+            <h1>No alquiles inteligencia.<br><br>Convi&#233;rtela en tuya.</h1>
+        </div>
+    </div>
+
+    <div class="section zone-sky" id="msg-final">
+        <div class="content-wrap">
+            <div class="pillars">
+                <span class="pillar">Privada</span>
+                <span class="pillar">Especializada</span>
+                <span class="pillar">Siempre actualizada</span>
+                <span class="pillar">Tuya</span>
+            </div>
+            <hr class="separator">
+            <h1>IA para la gente que piensa</h1>
+            <div class="final-ctas">
+                <a href="ia_local.html" class="cta-button">Ver nuestros productos</a>
+                <span class="cta-divider-dot"></span>
+                <a href="mailto:info@cambrianintelligence.com" class="cta-button cta-button--secondary">info@cambrianintelligence.com</a>
+            </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var sections = document.querySelectorAll('.section');
-            var observer = new IntersectionObserver(function(entries) {
-                entries.forEach(function(entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.2 });
-            sections.forEach(function(section) { observer.observe(section); });
+    document.addEventListener('DOMContentLoaded', function() {
 
-            document.getElementById('fork-scroll').addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('msg1').scrollIntoView({ behavior: 'smooth' });
+        /* ── Scroll-triggered fade-in ── */
+        var sections = document.querySelectorAll('.section');
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
-        });
+        }, { threshold: 0.18 });
+        sections.forEach(function(s) { observer.observe(s); });
+
+        /* ── Scroll-driven background morphing ── */
+        var bgDark = document.getElementById('bgDark');
+        var bgWarm = document.getElementById('bgWarm');
+        var bgCool = document.getElementById('bgCool');
+        var bgSky  = document.getElementById('bgSky');
+        var orb1   = document.getElementById('orb1');
+        var orb2   = document.getElementById('orb2');
+        var orb3   = document.getElementById('orb3');
+        var progressBar = document.getElementById('progressBar');
+
+        // Map sections to their zones
+        var sectionEls = [
+            document.getElementById('msg0'),
+            document.getElementById('msg1'),
+            document.getElementById('msg2'),
+            document.getElementById('msg3'),
+            document.getElementById('msg4'),
+            document.getElementById('msg5'),
+            document.getElementById('msg6'),
+            document.getElementById('msg7'),
+            document.getElementById('msg-final')
+        ];
+
+        function lerp(a, b, t) {
+            return a + (b - a) * Math.max(0, Math.min(1, t));
+        }
+
+        function updateBackground() {
+            var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+            var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            var progress = docHeight > 0 ? scrollY / docHeight : 0;
+
+            // Progress bar
+            progressBar.style.width = (progress * 100) + '%';
+
+            // Determine which zone we're in based on scroll progress
+            // 0–0.33: dark (threat), 0.33–0.55: warm (turning point),
+            // 0.55–0.75: cool (tech), 0.75–1.0: sky (liberation)
+            var dark = 0, warm = 0, cool = 0, sky = 0;
+
+            if (progress < 0.28) {
+                dark = 1;
+            } else if (progress < 0.38) {
+                var t = (progress - 0.28) / 0.10;
+                dark = 1 - t;
+                warm = t;
+            } else if (progress < 0.50) {
+                warm = 1;
+            } else if (progress < 0.58) {
+                var t = (progress - 0.50) / 0.08;
+                warm = 1 - t;
+                cool = t;
+            } else if (progress < 0.72) {
+                cool = 1;
+            } else if (progress < 0.82) {
+                var t = (progress - 0.72) / 0.10;
+                cool = 1 - t;
+                sky = t;
+            } else {
+                sky = 1;
+            }
+
+            bgDark.style.opacity = dark;
+            bgWarm.style.opacity = warm;
+            bgCool.style.opacity = cool;
+            bgSky.style.opacity  = sky;
+
+            // Orb visibility — ember orbs in dark/warm zones, blue orb in cool/sky
+            orb1.style.opacity = lerp(0, 0.7, dark + warm * 0.5);
+            orb2.style.opacity = lerp(0, 0.5, dark * 0.8 + warm * 0.3);
+            orb3.style.opacity = lerp(0, 0.6, cool + sky * 0.4);
+        }
+
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                requestAnimationFrame(function() {
+                    updateBackground();
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+
+        updateBackground();
+
+        /* ── Hero scroll link ── */
+        var forkScroll = document.getElementById('fork-scroll');
+        if (forkScroll) {
+            forkScroll.addEventListener('click', function(e) {
+                e.preventDefault();
+                var target = document.getElementById('msg1');
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }
+    });
     </script>
 </body>
 </html>
