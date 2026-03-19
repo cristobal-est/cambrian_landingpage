@@ -570,6 +570,36 @@
             font-size: 0.7rem;
             opacity: 0.7;
         }
+        .demo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            font-size: 0.84rem;
+            font-weight: 400;
+            letter-spacing: 0.03em;
+            color: var(--accent);
+            text-decoration: none;
+            border: 1px solid rgba(76,174,247,0.25);
+            background: rgba(76,174,247,0.06);
+            padding: 9px 20px;
+            border-radius: 40px;
+            transition: all 0.3s;
+        }
+        .demo-link:hover {
+            background: rgba(76,174,247,0.12);
+            border-color: rgba(76,174,247,0.4);
+            color: var(--white);
+        }
+        .demo-link::after {
+            content: '→';
+            font-size: 0.9rem;
+            transition: transform 0.3s;
+        }
+        .demo-link:hover::after {
+            transform: translateX(3px);
+        }
+
         .specialty-card.coming-soon {
             justify-content: center;
             align-items: center;
@@ -889,6 +919,7 @@
                     <span class="trait-sep">·</span>
                     <span class="trait">Tuya</span>
                 </div>
+                <a href="https://demo-legal.cambrianintelligence.com/" target="_blank" class="demo-link">Prueba la demo de IA Legal</a>
                 <div class="product-screenshot reveal">
                     <img src="llm_local_1.png" alt="IA local ejecutándose en un MacBook Pro">
                 </div>
@@ -1050,6 +1081,7 @@
                         <div class="specialty-feature">Navegación automática de bases de datos judiciales</div>
                         <div class="specialty-feature">Actualizaciones normativas periódicas</div>
                     </div>
+                    <a href="https://demo-legal.cambrianintelligence.com/" target="_blank" class="demo-link">Probar demo</a>
                 </div>
 
                 <!-- COMING SOON -->
@@ -1206,7 +1238,7 @@
                 el.classList.add('enter');
                 setTimeout(() => el.classList.remove('enter'), 400);
             }, 350);
-        }, 2400);
+        }, 3000);
     </script>
 </body>
 </html>
